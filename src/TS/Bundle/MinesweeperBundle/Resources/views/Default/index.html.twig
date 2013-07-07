@@ -1,5 +1,15 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-Hello world!
+<div ng-app>
+    <div ng-controller='indexCtrl'>
+        <ul>
+            {% raw %}
+            <li ng-repeat='testElem in testArray'>
+                {{ testElem }}!
+            </li>
+            {% endraw %}
+        </ul>
+    </div>
+</div>
 {% endblock %}
