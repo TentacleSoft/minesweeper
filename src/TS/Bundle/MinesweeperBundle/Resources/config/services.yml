@@ -1,0 +1,7 @@
+parameters:
+#    ts_minesweeper.example.class: TS\Bundle\MinesweeperBundle\Example
+
+services:
+#    ts_minesweeper.example:
+#        class: %ts_minesweeper.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

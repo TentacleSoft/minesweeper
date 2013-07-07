@@ -6,6 +6,9 @@
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+        {% javascripts '@TSMinesweeperBundle/Resources/public/js/angular.js' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
     </head>
     <body>
         {% block body %}{% endblock %}
