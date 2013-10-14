@@ -1,0 +1,35 @@
+body {
+
+}
+
+form#formchat {
+    display: none;
+}
+
+div#chat {
+    height: 400px;
+    overflow: scroll;
+    text-align: left;
+
+    border: 1px solid #DDDDDD;
+}
+
+#board {
+    width: 512px;
+
+    border-right: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+#board td {
+    width: 16px;
+    height: 16px;
+
+    border-left: 1px solid #DDDDDD;
+    border-top: 1px solid #DDDDDD;
+}
+
+.error {
+    color: red;
+    font-style: italic;
+}
