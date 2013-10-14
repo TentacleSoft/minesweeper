@@ -1,8 +1,8 @@
 {
-    "name": "rogerclotet/symfony-bootstrapped",
+    "name": "rogerclotet/minesweeper",
     "license": "MIT",
     "type": "project",
-    "description": "The \"Symfony Bootstrapped Edition\" distribution",
+    "description": "Minesweeper",
     "autoload": {
         "psr-0": { "": "src/" }
     },
