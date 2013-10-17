@@ -7,9 +7,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
         <script src="{{ asset('js/jquery.js') }}"></script>
-        {% javascripts
-            '@TSMinesweeperBundle/Resources/public/js/lib/angular.js'
-            '@TSMinesweeperBundle/Resources/public/js/controllers.js' %}
+        {% javascripts '@TSMinesweeperBundle/Resources/public/js/game.js' %}
             <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
     </head>

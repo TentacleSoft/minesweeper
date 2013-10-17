@@ -1,39 +1,35 @@
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
-<link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
+    {{ parent() }}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tsminesweeper/css/main.css') }}">
 {% endblock %}
 
 {% block body %}
-<div ng-app>
-    <div ng-controller='indexCtrl'>
-        <h1>MineSweeper</h1>
-        <div class="row">
-            <div class="span3">
-                <form id="formlogin" class="form-inline">
-                    <input type="text" id="username" class="input-small" value="username" />
-                    <input type="submit" id="open" class="btn" value="Enter"/>
-                </form>
-                <form id="formchat" class="form-inline">
-                    <input type="text" id="text" class="input-small" />
-                    <input type="submit" id="send" class="btn" value="Send"></button>
-                </form>
-                <div id="chat"></div>
-            </div>
-            <div class="span9">
-                <table id="board" class="table">
-                    <script id="boardTemplate" type="text/html">
-                        <!--<% for (var i = 0; i < 16; i++) { %>
-                        <tr>
-                            <% for (var j = 0; j < 16; j++) { %>
-                            <td></td>
-                            <% }; %>
-                        </tr>
-                        <% }; %>-->
-                    </script>
-                </table>
-            </div>
-        </div>
+<div id="container">
+    <div class="span3">
+        <h1>{% trans %}Minesweeper{% endtrans %}</h1>
+        <form id="formlogin" class="form-inline">
+            <input type="text" id="username" class="input-small" placeholder="{% trans %}Username{% endtrans %}" />
+            <input type="submit" id="login" class="btn" value="{% trans %}Login{% endtrans %}"/>
+        </form>
+        <form id="form-chat" class="form-inline">
+            <input type="text" id="text" class="input-small" />
+            <input type="submit" id="send" class="btn" value="{% trans %}Send{% endtrans %}" />
+        </form>
+        <div id="chat"></div>
+    </div>
+    <div id="board-container" class="span9">
+        <table id="board" class="table">
+            {% for i in 0..15 %}
+            <tr>
+                {% for j in 0..15 %}
+                <td class="board-cell" data-row="{{ i }}" data-col="{{ j }}"></td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 </div>
 {% endblock %}
