@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-        <script src="{{ asset('js/jquery.js') }}"></script>
-        {% javascripts '@TSMinesweeperBundle/Resources/public/js/game.js' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-        <script src="{{ asset('js/bootstrap.js') }}"></script>
-    </body>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+</head>
+<body>
+    {% block body %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    {% javascripts '@TSMinesweeperBundle/Resources/public/js/game.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script>var globals = JSON.parse('{{ globals|json_encode|raw }}');</script>
+</body>
 </html>

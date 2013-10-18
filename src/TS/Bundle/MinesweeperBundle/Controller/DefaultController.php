@@ -8,6 +8,18 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('TSMinesweeperBundle:Default:index.html.twig');
+        $globals = array(
+            'user' => array(
+                'name' => 'Provisional User',
+                'username' => 'provuser',
+            )
+        );
+
+        return $this->render(
+            'TSMinesweeperBundle:Default:index.html.twig',
+            array(
+                'globals' => $globals
+            )
+        );
     }
 }
