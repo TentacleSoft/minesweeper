@@ -7,7 +7,7 @@ body {
 }
 
 #chat {
-    height: 400px;
+    height: 200px;
     overflow: scroll;
     text-align: left;
 

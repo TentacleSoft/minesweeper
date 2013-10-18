@@ -1,3 +1,3 @@
 ts_minesweeper_homepage:
-    pattern:  /
-    defaults: { _controller: TSMinesweeperBundle:Default:index }
+    resource: @TSMinesweeperBundle/Controller/DefaultController.php
+    type:     annotation
