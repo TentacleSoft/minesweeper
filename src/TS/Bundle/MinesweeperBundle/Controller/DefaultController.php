@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -16,27 +17,15 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $randId = mt_rand();
+        $user = $this->getDoctrine()->getRepository('TSMinesweeperBundle:User')->findOneByUsername('genUser1');
 
         $globals = array(
             'user' => array(
-                'name' => 'User ' . $randId,
-                'username' => 'provuser' . $randId,
+                'name' => $user->getName(),
+                'username' => $user->getUsername(),
             )
         );
 
         return array('globals' => $globals);
-    }
-
-    /**
-     * @Route("/match/{matchId}/chat")
-     * @Method("GET")
-     * @Template()
-     */
-    public function chatAction()
-    {
-        $chat = 'This is the chat and now it\'s ' . time() . '!';
-
-        return array('chat' => $chat);
     }
 }

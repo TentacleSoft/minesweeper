@@ -4,10 +4,10 @@ var pollingRate = 1000;
 
 $(document).ready(function () {
     setInterval(function () {
-        $.get('/match/0/chat', function (data) {
+        $.getJSON('/game/0', function (data) {
             var chat = $('#chat');
 
-            chat.html(data).scrollTop(chat[0].scrollHeight);
+            chat.html(data.chat).scrollTop(chat[0].scrollHeight);
         });
     }, pollingRate);
 
