@@ -23,7 +23,7 @@ class GameController extends Controller
         $game = $this->getDoctrine()->getRepository('TSMinesweeperBundle:Game')->find($id);
 
         if (!$game) {
-            throw new NotFoundHttpException(sprintf('User %s not found', $id));
+            throw new NotFoundHttpException(sprintf('Game %s not found', $id));
         }
 
         return new JsonResponse($this->getGameInfo($game));
@@ -33,7 +33,7 @@ class GameController extends Controller
     {
         return array(
             'players' => $game->getPlayers(),
-            'board' => $game->getBoard(),
+            'board' => $game->getVisibleBoard(),
             'chat' => $game->getChat()
         );
     }

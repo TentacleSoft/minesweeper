@@ -3,7 +3,9 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tsminesweeper/css/main.css') }}">
+    {% stylesheets 'bundles/tsminesweeper/css/main.css' filter='cssrewrite' %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
 {% endblock %}
 
 {% block body %}

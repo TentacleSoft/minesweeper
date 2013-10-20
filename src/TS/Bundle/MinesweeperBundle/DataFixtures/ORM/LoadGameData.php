@@ -15,7 +15,6 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface
 
         $board = array();
         for ($i = 0; $i < 16; $i++) {
-            $board = array();
             for ($j = 0; $j < 16; $j++) {
                 $board[$i][$j] = 0;
             }
