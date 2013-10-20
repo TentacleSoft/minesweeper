@@ -28,7 +28,21 @@ function drawBoard(board) {
     var cells = $('.board-cell');
 
     for (var pos = 0; pos < cells.length; pos++) {
-        var cell = $(cells[pos]);
-        cell.html(board[cell.data('row')][cell.data('col')]);
+        var cell = $(cells[pos]),
+            cellValue = board[cell.data('row')][cell.data('col')];
+
+        switch (cellValue) {
+            case 'M':
+                cell..removeClass('enabled').addClass('mine');
+                break;
+            case '':
+                break;
+            case 0:
+                cell.removeClass('enabled').addClass('open');
+                break;
+            default: // if it's a number
+                cell.removeClass('enabled').addClass('open');
+                cell.html(cellValue);
+        }
     }
 }
