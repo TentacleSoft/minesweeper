@@ -29,8 +29,6 @@ class BoardFactory
             $board[$row][$col] = Symbols::MINE;
         }
 
-        error_log('$board with mines: ' . var_export($board, true));
-
         // Calculate cell numbers
         foreach ($board as $row => $rowCells) {
             foreach ($rowCells as $col => $value) {
@@ -39,8 +37,6 @@ class BoardFactory
                 }
             }
         }
-
-        error_log('$board with numbers: ' . var_export($board, true));
 
         return $board;
     }
@@ -58,7 +54,7 @@ class BoardFactory
 
         for ($i = $row - 1; $i <= $row + 1; $i++) {
             for ($j = $col - 1; $j <= $col + 1; $j++) {
-                if (isset($board[$i]) && isset($board[$i][$j]) && Symbols::MINE === $board[$i][$j]) {
+                if (isset($board[$i][$j]) && Symbols::MINE === $board[$i][$j]) {
                     $mines++;
                 }
             }

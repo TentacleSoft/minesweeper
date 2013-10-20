@@ -6,23 +6,32 @@ var game = {},
 $(document).ready(function () {
     setInterval(function () {
         $.getJSON('/games/1', function (data) {
-            if (data.board == 'undefined') {
-                return;
-            }
-
-            var chat = $('#chat');
-
-            chat.html(data.chat).scrollTop(chat[0].scrollHeight);
-            drawBoard(data.board);
-
-            game = data;
+            updateInfo(data);
         });
     }, pollingRate);
 
-    $('.board-cell').click(function () {
-        console.log('Click (' + $(this).data('row') + ', ' + $(this).data('col') + ')');
+    $('.board-cell.enabled').click(function () {
+        var row = $(this).data('row'),
+            col = $(this).data('col');
+        $.post('/games/1', {row: row, col: col}, function (data) {
+            updateInfo(data);
+        });
+        console.log('Click (' + row + ', ' + col + ')');
     });
 });
+
+function updateInfo(data) {
+    if (data.board == 'undefined') {
+        return;
+    }
+
+    var chat = $('#chat');
+
+    chat.html(data.chat).scrollTop(chat[0].scrollHeight);
+    drawBoard(data.board);
+
+    game = data;
+}
 
 function drawBoard(board) {
     var cells = $('.board-cell');

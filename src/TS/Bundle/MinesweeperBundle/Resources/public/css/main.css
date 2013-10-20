@@ -50,7 +50,11 @@ td.board-cell {
 }
 
 .board-cell.mine {
-    background-image: url('../images/mine.png');
+    background: #ffffff url('../images/mine.png');
+}
+
+.board-cell.open {
+    background-color: #ffffff;
 }
 
 .error {

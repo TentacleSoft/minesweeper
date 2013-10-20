@@ -7,6 +7,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use TS\Bundle\MinesweeperBundle\Entity\Game;
 use TS\Bundle\MinesweeperBundle\Service\BoardFactory;
+use TS\Bundle\MinesweeperBundle\Service\Symbols;
 
 class LoadGameData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -15,6 +16,12 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface
         $game = new Game();
 
         $board = BoardFactory::create(16, 50);
+        $visibleBoard = array();
+        foreach (range(0, 15) as $row) {
+            foreach (range(0, 15) as $col) {
+                $visibleBoard[$row][$col] = Symbols::UNKNOWN;
+            }
+        }
 
         $players = array(
             $this->getReference('user1')->getId(),
@@ -22,7 +29,7 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface
         );
 
         $game->setBoard($board);
-        $game->setVisibleBoard($board);
+        $game->setVisibleBoard($visibleBoard);
         $game->setChat('Example chat');
         $game->setPlayers($players);
 
