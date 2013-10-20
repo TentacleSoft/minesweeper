@@ -33,7 +33,7 @@ function drawBoard(board) {
 
         switch (cellValue) {
             case 'M':
-                cell..removeClass('enabled').addClass('mine');
+                cell.removeClass('enabled').addClass('mine');
                 break;
             case '':
                 break;

@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use TS\Bundle\MinesweeperBundle\Entity\Game;
+use TS\Bundle\MinesweeperBundle\Service\BoardFactory;
 
 class LoadGameData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -13,12 +14,7 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface
     {
         $game = new Game();
 
-        $board = array();
-        for ($i = 0; $i < 16; $i++) {
-            for ($j = 0; $j < 16; $j++) {
-                $board[$i][$j] = 0;
-            }
-        }
+        $board = BoardFactory::create(16, 50);
 
         $players = array(
             $this->getReference('user1')->getId(),
