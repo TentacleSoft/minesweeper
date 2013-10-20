@@ -43,11 +43,25 @@ class Game
     private $visibleBoard;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="scores", type="array")
+     */
+    private $scores;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="chat", type="text")
      */
     private $chat;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="activePlayer", type="integer")
+     */
+    private $activePlayer;
 
 
     /**
@@ -130,6 +144,29 @@ class Game
     }
 
     /**
+     * Set scores
+     *
+     * @param array $scores
+     * @return Game
+     */
+    public function setScores($scores)
+    {
+        $this->scores = $scores;
+    
+        return $this;
+    }
+
+    /**
+     * Get scores
+     *
+     * @return array 
+     */
+    public function getScores()
+    {
+        return $this->scores;
+    }
+
+    /**
      * Set chat
      *
      * @param string $chat
@@ -150,5 +187,28 @@ class Game
     public function getChat()
     {
         return $this->chat;
+    }
+
+    /**
+     * Set activePlayer
+     *
+     * @param integer $activePlayer
+     * @return Game
+     */
+    public function setActivePlayer($activePlayer)
+    {
+        $this->activePlayer = $activePlayer;
+    
+        return $this;
+    }
+
+    /**
+     * Get activePlayer
+     *
+     * @return integer 
+     */
+    public function getActivePlayer()
+    {
+        return $this->activePlayer;
     }
 }

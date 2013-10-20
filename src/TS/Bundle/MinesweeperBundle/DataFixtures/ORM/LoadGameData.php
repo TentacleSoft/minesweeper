@@ -32,6 +32,8 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface
         $game->setVisibleBoard($visibleBoard);
         $game->setChat('Example chat');
         $game->setPlayers($players);
+        $game->setActivePlayer(0);
+        $game->setScores(array(0, 0));
 
         $manager->persist($game);
         $manager->flush();
