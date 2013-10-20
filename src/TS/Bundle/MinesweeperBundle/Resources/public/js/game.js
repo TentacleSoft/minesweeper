@@ -51,6 +51,7 @@ function drawBoard(board) {
                 break;
             default: // if it's a number
                 cell.removeClass('enabled').addClass('open');
+                cell.attr('data-number', cellValue);
                 cell.html(cellValue);
         }
     }

@@ -39,6 +39,8 @@ td.board-cell {
     border-top: 1px solid #dddddd;
 
     background-color: #ededed;
+
+    font-weight: bold;
 }
 
 .board-cell.enabled:hover {
@@ -55,6 +57,38 @@ td.board-cell {
 
 .board-cell.open {
     background-color: #ffffff;
+}
+
+.board-cell[data-number="1"] {
+    color: blue;
+}
+
+.board-cell[data-number="2"] {
+    color: green;
+}
+
+.board-cell[data-number="3"] {
+    color: red;
+}
+
+.board-cell[data-number="4"] {
+    color: darkblue;
+}
+
+.board-cell[data-number="5"] {
+    color: darkred;
+}
+
+.board-cell[data-number="6"] {
+    color: lightseagreen;
+}
+
+.board-cell[data-number="7"] {
+    color: black;
+}
+
+.board-cell[data-number="8"] {
+    color: darkgrey;
 }
 
 .error {
