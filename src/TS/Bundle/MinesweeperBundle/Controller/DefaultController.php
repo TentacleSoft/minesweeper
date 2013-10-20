@@ -3,6 +3,7 @@
 namespace TS\Bundle\MinesweeperBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use TS\Bundle\MinesweeperBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -21,6 +22,7 @@ class DefaultController extends Controller
 
         $globals = array(
             'user' => array(
+                'id' => $user->getId(),
                 'name' => $user->getName(),
                 'username' => $user->getUsername(),
             )

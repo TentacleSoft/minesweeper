@@ -43,6 +43,14 @@ class GameController extends Controller
 
         $game = $this->getGame($id);
 
+        $players = $game->getPlayers();
+        $activePlayer = $players[$game->getActivePlayer()];
+
+        if (1 != $activePlayer) {
+            // TODO: change exception type?
+            throw new BadRequestHttpException(sprintf('User %s is not currently active', $activePlayer));
+        }
+
         $this->openCell($game, $row, $col);
 
         $this->getDoctrine()->getManager()->flush();
@@ -91,9 +99,11 @@ class GameController extends Controller
     private function getGameInfo(Game $game)
     {
         return array(
-            'players' => $game->getPlayers(),
-            'board' => $game->getVisibleBoard(),
-            'chat' => $game->getChat()
+            'players'      => $game->getPlayers(),
+            'activePlayer' => $game->getActivePlayer(),
+            'scores'       => $game->getScores(),
+            'board'        => $game->getVisibleBoard(),
+            'chat'         => $game->getChat()
         );
     }
 
@@ -114,7 +124,9 @@ class GameController extends Controller
         $visibleBoard[$row][$col] = $board[$row][$col];
         $game->setVisibleBoard($visibleBoard);
 
-        if (0 === $board[$row][$col]) {
+        if (Symbols::MINE === $board[$row][$col]) {
+            $game->setScores($game->getScores()[0] + 1);
+        } elseif (0 === $board[$row][$col]) {
             $this->openCell($game, $row - 1, $col - 1);
             $this->openCell($game, $row - 1, $col    );
             $this->openCell($game, $row - 1, $col + 1);
