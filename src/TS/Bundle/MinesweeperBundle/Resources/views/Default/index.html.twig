@@ -12,16 +12,12 @@
 <div id="container">
     <div class="span3">
         <h1>{% trans %}Minesweeper{% endtrans %}</h1>
-        <!--<form id="formlogin" class="form-inline">
-            <input type="text" id="username" class="input-small" placeholder="{% trans %}Username{% endtrans %}" />
-            <input type="submit" id="login" class="btn" value="{% trans %}Login{% endtrans %}"/>
-        </form>-->
-        Hello {{ globals.user.name }}!
-        <form id="form-chat" class="form-inline">
-            <input type="text" id="text" class="input-small" />
-            <input type="submit" id="send" class="btn" value="{% trans %}Send{% endtrans %}" />
-        </form>
+        {% trans %}Hello{% endtrans %} {{ globals.user.name }}!
         <div id="chat"></div>
+        <form id="form-chat">
+            <input type="text" id="text" autocomplete="off" />
+            <input type="submit" id="send" class="btn btn-default" value="{% trans %}Send{% endtrans %}" />
+        </form>
     </div>
     <div id="board-container" class="span9">
         <table id="board" class="table">

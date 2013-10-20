@@ -1,11 +1,12 @@
 'use strict';
 
-var game = {},
+var gameId = 1,
+    game = {},
     pollingRate = 1000;
 
 $(document).ready(function () {
     setInterval(function () {
-        $.getJSON('/games/1', function (data) {
+        $.getJSON('/games/' + gameId, function (data) {
             updateInfo(data);
         });
     }, pollingRate);
@@ -13,10 +14,22 @@ $(document).ready(function () {
     $('.board-cell.enabled').click(function () {
         var row = $(this).data('row'),
             col = $(this).data('col');
-        $.post('/games/1', {row: row, col: col}, function (data) {
+        $.post('/games/' + gameId, {row: row, col: col}, function (data) {
             updateInfo(data);
         });
         console.log('Click (' + row + ', ' + col + ')');
+    });
+
+    $('#form-chat').submit(function () {
+        var text = $('#text').val();
+
+        if (text != '') {
+            $('#text').val('');
+            $('#chat').append('<br />' + text);
+            $.post('/games/' + gameId + '/chat', {text: text});
+        }
+
+        return false;
     });
 });
 

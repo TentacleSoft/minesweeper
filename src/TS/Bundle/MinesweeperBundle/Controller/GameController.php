@@ -2,6 +2,7 @@
 
 namespace TS\Bundle\MinesweeperBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TS\Bundle\MinesweeperBundle\Entity\Game;
@@ -22,13 +23,7 @@ class GameController extends Controller
      */
     public function gameAction($id)
     {
-        $game = $this->getDoctrine()->getRepository('TSMinesweeperBundle:Game')->find($id);
-
-        if (!$game) {
-            throw new NotFoundHttpException(sprintf('Game %s not found', $id));
-        }
-
-        return new JsonResponse($this->getGameInfo($game));
+        return new JsonResponse($this->getGameInfo($this->getGame($id)));
     }
 
     /**
@@ -46,18 +41,46 @@ class GameController extends Controller
             throw new BadRequestHttpException('Row or col empty');
         }
 
+        $game = $this->getGame($id);
+
+        $this->openCell($game, $row, $col);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return new JsonResponse($this->getGameInfo($game));
+    }
+
+    /**
+     * @Route("/{id}/chat")
+     * @Method("POST")
+     */
+    public function sendChatAction($id)
+    {
+        $request = $this->getRequest();
+
+        $text = $request->get('text');
+
+        if (empty($text)) {
+            throw new BadRequestHttpException('Empty text');
+        }
+
+        $game = $this->getGame($id);
+        $game->setChat($game->getChat() . '<br />' . $text);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return new Response('', 204);
+    }
+
+    private function getGame($id)
+    {
         $game = $this->getDoctrine()->getRepository('TSMinesweeperBundle:Game')->find($id);
 
         if (!$game) {
             throw new NotFoundHttpException(sprintf('Game %s not found', $id));
         }
 
-        $this->openCell($game, $row, $col);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-
-        return new JsonResponse($this->getGameInfo($game));
+        return $game;
     }
 
     /**

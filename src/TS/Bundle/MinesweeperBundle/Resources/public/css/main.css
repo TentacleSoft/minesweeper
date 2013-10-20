@@ -2,18 +2,19 @@ body {
 
 }
 
-#form-chat {
-    display: none;
-}
-
 #chat {
     padding: 5px;
+    margin-bottom: 5px;
 
     height: 200px;
     overflow: scroll;
     text-align: left;
 
     border: 1px solid #dddddd;
+}
+
+#text {
+    width: 257px;
 }
 
 #board-container {
