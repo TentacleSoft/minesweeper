@@ -22,9 +22,8 @@ class Game
     private $id;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="players", type="array")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="games")
+     * @ORM\JoinTable(name="games_players")
      */
     private $players;
 
@@ -210,5 +209,35 @@ class Game
     public function getActivePlayer()
     {
         return $this->activePlayer;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->players = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add players
+     *
+     * @param \TS\Bundle\MinesweeperBundle\Entity\User $players
+     * @return Game
+     */
+    public function addPlayer(\TS\Bundle\MinesweeperBundle\Entity\User $players)
+    {
+        $this->players[] = $players;
+    
+        return $this;
+    }
+
+    /**
+     * Remove players
+     *
+     * @param \TS\Bundle\MinesweeperBundle\Entity\User $players
+     */
+    public function removePlayer(\TS\Bundle\MinesweeperBundle\Entity\User $players)
+    {
+        $this->players->removeElement($players);
     }
 }
