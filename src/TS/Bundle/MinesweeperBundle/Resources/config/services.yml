@@ -1,7 +1,15 @@
 parameters:
-#    ts_minesweeper.example.class: TS\Bundle\MinesweeperBundle\Example
+    ts_minesweeper.game_manager.class: TS\Bundle\MinesweeperBundle\Service\GameManager
+    ts_minesweeper.game_repository.class: TS\Bundle\MinesweeperBundle\Repository\GameRepository
+    ts_minesweeper.game_repository.argument: 'TSMinesweeperBundle:Game'
 
 services:
-#    ts_minesweeper.example:
-#        class: %ts_minesweeper.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    ts_minesweeper.game_manager:
+        class: %ts_minesweeper.game_manager.class%
+        arguments: [@ts_minesweeper.game_repository, @doctrine.orm.entity_manager]
+
+    ts_minesweeper.game_repository:
+        class: %ts_minesweeper.game_repository.class%
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments: [%ts_minesweeper.game_repository.argument%]

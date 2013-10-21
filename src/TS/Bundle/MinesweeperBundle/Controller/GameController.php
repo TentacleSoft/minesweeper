@@ -18,6 +18,37 @@ use TS\Bundle\MinesweeperBundle\Service\Symbols;
 class GameController extends Controller
 {
     /**
+     * @Route("/")
+     * @Method("POST")
+     */
+    public function newGameAction()
+    {
+        $playerIds = $this->getRequest()->get('players');
+        $activePlayer = $this->getRequest()->get('activePlayer');
+
+        if (is_null($playerIds)) {
+            throw new BadRequestHttpException('Player ids missing');
+        }
+
+        $gameManager = $this->get('ts_minesweeper.game_manager');
+        $userRepository = $this->getDoctrine()->getRepository('TSMinesweeperBundle:User');
+
+        $players = array();
+        $playerIds = explode(',', $playerIds);
+        foreach ($playerIds as $playerId) {
+            $players[] = $userRepository->findOneById($playerId);
+        }
+
+        try {
+            $game = $gameManager->create($players, $activePlayer);
+        } catch (\Exception $e) {
+            throw new BadRequestHttpException('Failed to create game: ' . $e->getMessage());
+        }
+
+        return new JsonResponse($this->getGameInfo($game));
+    }
+
+    /**
      * @Route("/{id}")
      * @Method("GET")
      */
