@@ -15,14 +15,14 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
             'name' => 'Generated User 1',
             'username' => 'genUser1',
             'password' => '1234',
-            'email' => 'user1@volcanica.cat'
+            'email' => 'user1@volcanica.cat',
         ),
         array(
             'id' => 2,
             'name' => 'Generated User 2',
             'username' => 'genUser2',
             'password' => '1234',
-            'email' => 'user2@volcanica.cat'
+            'email' => 'user2@volcanica.cat',
         )
     );
 

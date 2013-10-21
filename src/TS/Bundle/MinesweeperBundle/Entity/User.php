@@ -27,11 +27,9 @@ class User extends BaseUser
     private $name;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="matches", type="array")
+     * @ORM\ManyToMany(targetEntity="Game", mappedBy="players")
      */
-    private $matches;
+    private $games;
 
     /**
      * Set name
@@ -55,37 +53,55 @@ class User extends BaseUser
     {
         return $this->name;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->games = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
-     * Set matches
+     * Add games
      *
-     * @param array $matches
+     * @param \TS\Bundle\MinesweeperBundle\Entity\Game $games
      * @return User
      */
-    public function setMatches(array $matches)
+    public function addGame(\TS\Bundle\MinesweeperBundle\Entity\Game $games)
     {
-        $this->matches = $matches;
-
+        $this->games[] = $games;
+    
         return $this;
     }
 
     /**
-     * Add match
+     * Remove games
      *
-     * @param $match
+     * @param \TS\Bundle\MinesweeperBundle\Entity\Game $games
      */
-    public function addMatch($match)
+    public function removeGame(\TS\Bundle\MinesweeperBundle\Entity\Game $games)
     {
-        $this->matches[] = $match;
+        $this->games->removeElement($games);
     }
 
     /**
-     * Get matches
+     * Get games
      *
-     * @return array
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMatches()
+    public function getGames()
     {
-        return $this->matches;
+        return $this->games;
     }
 }

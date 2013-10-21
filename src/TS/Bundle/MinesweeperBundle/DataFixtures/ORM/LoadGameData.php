@@ -23,17 +23,12 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface
             }
         }
 
-        $players = array(
-            $this->getReference('user1')->getId(),
-            $this->getReference('user2')->getId()
-        );
-
         $game->setBoard($board);
         $game->setVisibleBoard($visibleBoard);
         $game->setChat($this->getReference('user1')->getUsername() . ' vs ' . $this->getReference('user2')->getUsername());
-        $game->setPlayers($players);
         $game->setActivePlayer(0);
         $game->setScores(array(0, 0));
+        $game->addPlayer($this->getReference('user1'))->addPlayer($this->getReference('user2'));
 
         $manager->persist($game);
         $manager->flush();
