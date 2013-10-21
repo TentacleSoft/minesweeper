@@ -16,7 +16,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $user = $this->getDoctrine()->getRepository('TSMinesweeperBundle:User')->findOneByUsername('genUser1');
+        $user = $this->getUser();
 
         $globals = array(
             'user' => array(

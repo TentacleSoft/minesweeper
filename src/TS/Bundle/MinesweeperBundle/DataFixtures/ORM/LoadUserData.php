@@ -14,13 +14,15 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
             'id' => 1,
             'name' => 'Generated User 1',
             'username' => 'genUser1',
-            'password' => '1234'
+            'password' => '1234',
+            'email' => 'user1@volcanica.cat'
         ),
         array(
             'id' => 2,
             'name' => 'Generated User 2',
             'username' => 'genUser2',
-            'password' => '1234'
+            'password' => '1234',
+            'email' => 'user2@volcanica.cat'
         )
     );
 
@@ -29,9 +31,11 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         foreach ($this->userData as $userData) {
             $user = new User();
 
-            $user->setUsername($userData['username']);
-            $user->setName($userData['name']);
-            $user->setPassword(sha1($userData['password']));
+            $user->setUsername($userData['username'])
+                ->setName($userData['name'])
+                ->setPlainPassword($userData['password'])
+                ->setEmail($userData['email'])
+                ->setEnabled(true);
 
             $manager->persist($user);
 
