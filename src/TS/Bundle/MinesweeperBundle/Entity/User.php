@@ -1,32 +1,23 @@
 <?php
+// src/Acme/UserBundle/Entity/User.php
 
 namespace TS\Bundle\MinesweeperBundle\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * User
- *
- * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Table(name="fos_user")
  */
-class User
+class User extends BaseUser
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="username", type="string", unique=true, length=255)
-     */
-    private $username;
+    protected $id;
 
     /**
      * @var string
@@ -36,57 +27,11 @@ class User
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255)
-     */
-    private $password;
-
-    /**
      * @var array
      *
      * @ORM\Column(name="matches", type="array")
      */
     private $matches;
-
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set username
-     *
-     * @param string $username
-     * @throws \Exception
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        if (is_numeric($username)) {
-            throw new \Exception('Username must have letters');
-        }
-
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * Get username
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
 
     /**
      * Set name
@@ -112,39 +57,26 @@ class User
     }
 
     /**
-     * Set password
-     *
-     * @param string $password
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * Set matches
      *
      * @param array $matches
      * @return User
      */
-    public function setMatches($matches)
+    public function setMatches(array $matches)
     {
         $this->matches = $matches;
 
         return $this;
+    }
+
+    /**
+     * Add match
+     *
+     * @param $match
+     */
+    public function addMatch($match)
+    {
+        $this->matches[] = $match;
     }
 
     /**

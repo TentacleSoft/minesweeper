@@ -1,0 +1,7 @@
+parameters:
+#    ts_user.example.class: TS\Bundle\UserBundle\Example
+
+services:
+#    ts_user.example:
+#        class: %ts_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
