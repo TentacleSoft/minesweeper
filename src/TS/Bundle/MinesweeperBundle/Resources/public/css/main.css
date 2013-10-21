@@ -2,31 +2,96 @@ body {
 
 }
 
-form#formchat {
-    display: none;
-}
+#chat {
+    padding: 5px;
+    margin-bottom: 5px;
 
-div#chat {
-    height: 400px;
+    height: 200px;
     overflow: scroll;
     text-align: left;
 
-    border: 1px solid #DDDDDD;
+    border: 1px solid #dddddd;
+}
+
+#text {
+    width: 257px;
+}
+
+#board-container {
+    padding-top: 20px;
 }
 
 #board {
     width: 512px;
 
-    border-right: 1px solid #DDDDDD;
-    border-bottom: 1px solid #DDDDDD;
+    border-right: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
 }
 
-#board td {
-    width: 16px;
-    height: 16px;
+td.board-cell {
+    padding: 0;
+    line-height: 32px;
+    text-align: center;
+}
 
-    border-left: 1px solid #DDDDDD;
-    border-top: 1px solid #DDDDDD;
+.board-cell {
+    width: 32px;
+    height: 32px;
+
+    border-left: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+
+    background-color: #ededed;
+
+    font-weight: bold;
+}
+
+.board-cell.enabled:hover {
+    background-color: #f0f0f0;
+}
+
+.board-cell.enabled:active {
+    background-color: #f5f5f5;
+}
+
+.board-cell.mine {
+    background: #ffffff url('../images/mine.png');
+}
+
+.board-cell.open {
+    background-color: #ffffff;
+}
+
+.board-cell[data-number="1"] {
+    color: blue;
+}
+
+.board-cell[data-number="2"] {
+    color: green;
+}
+
+.board-cell[data-number="3"] {
+    color: red;
+}
+
+.board-cell[data-number="4"] {
+    color: darkblue;
+}
+
+.board-cell[data-number="5"] {
+    color: darkred;
+}
+
+.board-cell[data-number="6"] {
+    color: lightseagreen;
+}
+
+.board-cell[data-number="7"] {
+    color: black;
+}
+
+.board-cell[data-number="8"] {
+    color: darkgrey;
 }
 
 .error {
