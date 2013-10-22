@@ -116,6 +116,8 @@ class GameManager
                 return $game;
             }
         }
+
+        throw new \Exception('Corrupt game, active player not in players');
     }
 
     /**
