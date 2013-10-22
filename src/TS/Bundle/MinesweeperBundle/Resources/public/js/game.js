@@ -44,8 +44,10 @@ function updateInfo(data) {
     }
 
     var chat = $('#chat');
+    if ($('<div>').html(data.chat).html() != chat.html()) {
+        chat.html(data.chat).scrollTop(chat[0].scrollHeight);
+    }
 
-    chat.html(data.chat).scrollTop(chat[0].scrollHeight);
     drawBoard(data.board);
 
     game = data;
