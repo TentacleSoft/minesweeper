@@ -106,17 +106,19 @@ class GameManager
             throw new \Exception(sprintf('User %s is not currently active', $activePlayer));
         }
 
-        $this->openCell($game, $row, $col);
+        $openedCell = $this->openCell($game, $row, $col);
 
-        $players = $game->getPlayers();
-        $nextPlayerPos = 0;
-        foreach ($players as $pos => $player) {
-            if ($player->getId() === $activePlayer) {
-                $nextPlayerPos = ($pos + 1) % count($players);
-                break;
+        if (Symbols::MINE !== $openedCell) {
+            $players = $game->getPlayers();
+            $nextPlayerPos = 0;
+            foreach ($players as $pos => $player) {
+                if ($player->getId() === $activePlayer) {
+                    $nextPlayerPos = ($pos + 1) % count($players);
+                    break;
+                }
             }
+            $game->setActivePlayer($players[$nextPlayerPos]->getId());
         }
-        $game->setActivePlayer($players[$nextPlayerPos]->getId());
 
         $this->entityManager->flush();
 
@@ -143,6 +145,8 @@ class GameManager
      * @param Game $game
      * @param int $row
      * @param int $col
+     *
+     * @return string|null Symbol opened (if any)
      */
     private function openCell(Game &$game, $row, $col)
     {
@@ -150,7 +154,7 @@ class GameManager
         $visibleBoard = $game->getVisibleBoard();
 
         if (!isset($board[$row][$col]) || $visibleBoard[$row][$col] !== Symbols::UNKNOWN) {
-            return;
+            return null;
         }
 
         $visibleBoard[$row][$col] = $board[$row][$col];
@@ -168,5 +172,7 @@ class GameManager
             $this->openCell($game, $row + 1, $col    );
             $this->openCell($game, $row + 1, $col + 1);
         }
+
+        return $board[$row][$col];
     }
 }
