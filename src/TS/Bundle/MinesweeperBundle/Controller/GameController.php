@@ -18,19 +18,50 @@ use TS\Bundle\MinesweeperBundle\Service\Symbols;
 class GameController extends Controller
 {
     /**
-     * @Route("/{id}")
-     * @Method("GET")
+     * @Route("/")
+     * @Method("POST")
      */
-    public function gameAction($id)
+    public function newGameAction()
     {
-        return new JsonResponse($this->getGameInfo($this->getGame($id)));
+        $playerIds = $this->getRequest()->get('players');
+        $activePlayer = $this->getRequest()->get('activePlayer');
+
+        if (is_null($playerIds)) {
+            throw new BadRequestHttpException('Player ids missing');
+        }
+
+        $gameManager = $this->get('ts_minesweeper.game_manager');
+        $userRepository = $this->getDoctrine()->getRepository('TSMinesweeperBundle:User');
+
+        $players = array();
+        $playerIdsArray = explode(',', $playerIds);
+        foreach ($playerIdsArray as $playerId) {
+            $players[] = $userRepository->findOneById($playerId);
+        }
+
+        try {
+            $game = $gameManager->create($players, $activePlayer);
+        } catch (\Exception $e) {
+            throw new BadRequestHttpException('Failed to create game: ' . $e->getMessage());
+        }
+
+        return new JsonResponse($this->getGameInfo($game));
     }
 
     /**
-     * @Route("/{id}")
+     * @Route("/{gameId}")
+     * @Method("GET")
+     */
+    public function gameAction($gameId)
+    {
+        return new JsonResponse($this->getGameInfo($this->getGame($gameId)));
+    }
+
+    /**
+     * @Route("/{gameId}")
      * @Method("POST")
      */
-    public function openCellAction($id)
+    public function openCellAction($gameId)
     {
         $request = $this->getRequest();
 
@@ -41,28 +72,20 @@ class GameController extends Controller
             throw new BadRequestHttpException('Row or col empty');
         }
 
-        $game = $this->getGame($id);
+        /** @var Game */
+        $game = $this->getGame($gameId);
 
-        $players = $game->getPlayers();
-        $activePlayer = $players[$game->getActivePlayer()];
-
-        if (1 != $activePlayer) {
-            // TODO: change exception type?
-            throw new BadRequestHttpException(sprintf('User %s is not currently active', $activePlayer));
-        }
-
-        $this->openCell($game, $row, $col);
-
-        $this->getDoctrine()->getManager()->flush();
+        $gameManager = $this->get('ts_minesweeper.game_manager');
+        $gameManager->open($game, $this->getUser(), $row, $col);
 
         return new JsonResponse($this->getGameInfo($game));
     }
 
     /**
-     * @Route("/{id}/chat")
+     * @Route("/{gameId}/chat")
      * @Method("POST")
      */
-    public function sendChatAction($id)
+    public function sendChatAction($gameId)
     {
         $request = $this->getRequest();
 
@@ -72,20 +95,21 @@ class GameController extends Controller
             throw new BadRequestHttpException('Empty text');
         }
 
-        $game = $this->getGame($id);
-        $game->setChat($game->getChat() . '<br />' . $text);
+        /** @var Game */
+        $game = $this->getGame($gameId);
 
-        $this->getDoctrine()->getManager()->flush();
+        $gameManager = $this->get('ts_minesweeper.game_manager');
+        $gameManager->sendChat($game, $this->getUser(), $text);
 
         return new Response('', 204);
     }
 
-    private function getGame($id)
+    private function getGame($gameId)
     {
-        $game = $this->getDoctrine()->getRepository('TSMinesweeperBundle:Game')->find($id);
+        $game = $this->get('ts_minesweeper.game_manager')->get($gameId);
 
         if (!$game) {
-            throw new NotFoundHttpException(sprintf('Game %s not found', $id));
+            throw new NotFoundHttpException(sprintf('Game %s not found', $gameId));
         }
 
         return $game;
@@ -105,36 +129,5 @@ class GameController extends Controller
             'board'        => $game->getVisibleBoard(),
             'chat'         => $game->getChat()
         );
-    }
-
-    /**
-     * @param Game $game
-     * @param int $row
-     * @param int $col
-     */
-    private function openCell(Game &$game, $row, $col)
-    {
-        $board = $game->getBoard();
-        $visibleBoard = $game->getVisibleBoard();
-
-        if (!isset($board[$row][$col]) || $visibleBoard[$row][$col] !== Symbols::UNKNOWN) {
-            return;
-        }
-
-        $visibleBoard[$row][$col] = $board[$row][$col];
-        $game->setVisibleBoard($visibleBoard);
-
-        if (Symbols::MINE === $board[$row][$col]) {
-            $game->setScores($game->getScores()[0] + 1);
-        } elseif (0 === $board[$row][$col]) {
-            $this->openCell($game, $row - 1, $col - 1);
-            $this->openCell($game, $row - 1, $col    );
-            $this->openCell($game, $row - 1, $col + 1);
-            $this->openCell($game, $row    , $col - 1);
-            $this->openCell($game, $row    , $col + 1);
-            $this->openCell($game, $row + 1, $col - 1);
-            $this->openCell($game, $row + 1, $col    );
-            $this->openCell($game, $row + 1, $col + 1);
-        }
     }
 }

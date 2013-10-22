@@ -8,27 +8,27 @@
     {% endstylesheets %}
 {% endblock %}
 
-{% block body %}
-<div id="container">
-    <div class="span3">
-        <h1>{% trans %}Minesweeper{% endtrans %}</h1>
-        {% trans %}Hello{% endtrans %} {{ globals.user.name }}!
-        <div id="chat"></div>
-        <form id="form-chat">
-            <input type="text" id="text" autocomplete="off" />
-            <input type="submit" id="send" class="btn btn-default" value="{% trans %}Send{% endtrans %}" />
-        </form>
-    </div>
-    <div id="board-container" class="span9">
-        <table id="board" class="table">
-            {% for i in 0..15 %}
-            <tr>
-                {% for j in 0..15 %}
-                <td class="board-cell enabled" data-row="{{ i }}" data-col="{{ j }}"></td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-</div>
+{% block navcolumn %}
+{% trans %}Hello{% endtrans %} {{ globals.user.name }}!
+<div id="chat"></div>
+<form id="form-chat">
+    <input type="text" id="text" autocomplete="off" />
+    <input type="submit" id="send" class="btn btn-default" value="{% trans %}Send{% endtrans %}" />
+</form>
+{% endblock %}
+
+{% block maincolumn %}
+<table id="board" class="table">
+    {% for i in 0..15 %}
+    <tr>
+        {% for j in 0..15 %}
+        <td class="board-cell enabled" data-row="{{ i }}" data-col="{{ j }}"></td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
+{% block javascripts %}
+<script>var globals = JSON.parse('{{ globals|json_encode|raw }}');</script>
 {% endblock %}
