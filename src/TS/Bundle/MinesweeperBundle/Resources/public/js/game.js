@@ -16,6 +16,8 @@ $(document).ready(function () {
             col = $(this).data('col');
         $.post('/games/' + gameId, {row: row, col: col}, function (data) {
             updateInfo(data);
+        }).fail(function () {
+            $('#chat').append('<p class="error">It\'s not your turn</p>')
         });
         console.log('Click (' + row + ', ' + col + ')');
     });
@@ -25,7 +27,7 @@ $(document).ready(function () {
 
         if (text != '') {
             $('#text').val('');
-            $('#chat').append('<br />' + text);
+            $('#chat').append('<p>' + text + '</p>');
             $.post('/games/' + gameId + '/chat', {text: text});
         }
 
