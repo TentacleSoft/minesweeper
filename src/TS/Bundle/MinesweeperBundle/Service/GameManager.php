@@ -10,7 +10,7 @@ use TS\Bundle\MinesweeperBundle\Entity\User;
 class GameManager
 {
     const BOARD_SIZE = 16;
-    const MINES = 50;
+    const MINES = 49;
 
     /**
      * @var EntityRepository
@@ -103,23 +103,17 @@ class GameManager
     {
         $activePlayer = $game->getActivePlayer();
         if ($player->getId() !== $activePlayer) {
-            throw new \Exception(sprintf('User %s is not currently active', $activePlayer));
+            throw new \Exception(sprintf('User %s is not currently active or game is already over', $activePlayer));
         }
 
         $players = $game->getPlayers();
-        $nextPlayerPos = 0;
         foreach ($players as $pos => $player) {
             if ($player->getId() === $activePlayer) {
-                $nextPlayerPos = ($pos + 1) % count($players);
                 break;
             }
         }
 
-        $openedCell = $this->openCell($game, $pos, $row, $col);
-
-        if (Symbols::MINE !== $openedCell) {
-            $game->setActivePlayer($players[$nextPlayerPos]->getId());
-        }
+        $this->openCell($game, $pos, $row, $col);
 
         $this->entityManager->flush();
 
@@ -173,7 +167,18 @@ class GameManager
 
             $scores = $game->getScores();
             $scores[$playerPos] += 1;
+
+            // End game (no next turn, a player has already won)
+            if ($scores[$playerPos] > static::MINES / 2) {
+                $game->setActivePlayer(Symbols::GAME_OVER);
+            }
+
             $game->setScores($scores);
+        } else {
+            $players = $game->getPlayers();
+            $nextPlayerPos = ($playerPos + 1) % count($players);
+
+            $game->setActivePlayer($players[$nextPlayerPos]->getId());
         }
 
         $game->setVisibleBoard($visibleBoard);
