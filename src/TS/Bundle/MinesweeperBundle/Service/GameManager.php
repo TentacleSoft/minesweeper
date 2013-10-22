@@ -129,12 +129,19 @@ class GameManager
      * @param Game $game
      * @param User $user
      * @param string $text
+     * @param string|null $type [info|error]
      *
      * @return Game
      */
-    public function sendChat(Game $game, User $user, $text)
+    public function sendChat(Game $game, User $user, $text, $type = null)
     {
-        $game->setChat(sprintf('%s<p>%s</p>', $game->getChat(), $text));
+        if (null === $type) {
+            $chat = sprintf('%s<p><span class="username">%s> </span>%s</p>', $game->getChat(), $user->getUsername(), $text);
+        } else {
+            $chat = sprintf('%s<p class="%s">%s</p>', $game->getChat(), $type, $text);
+        }
+
+        $game->setChat($chat);
 
         $this->entityManager->flush();
 

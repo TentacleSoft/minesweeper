@@ -29,8 +29,9 @@ $(document).ready(function () {
 
         if (text != '') {
             $('#text').val('');
-            $('#chat').append('<p>' + text + '</p>');
-            $.post('/games/' + gameId + '/chat', {text: text});
+            $.post('/games/' + gameId + '/chat', {text: text}, function (data) {
+                updateInfo(data);
+            });
         }
 
         return false;

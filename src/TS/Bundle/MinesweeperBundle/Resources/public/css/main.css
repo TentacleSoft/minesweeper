@@ -17,6 +17,11 @@ body {
     margin-bottom: 0;
 }
 
+#chat .username {
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
 #chat .info:before {
     content: 'INFO> ';
     color: green;
