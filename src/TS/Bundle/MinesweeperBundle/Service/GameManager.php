@@ -109,15 +109,13 @@ class GameManager
         $players = $game->getPlayers();
         foreach ($players as $pos => $player) {
             if ($player->getId() === $activePlayer) {
-                break;
+                $this->openCell($game, $pos, $row, $col);
+
+                $this->entityManager->flush();
+
+                return $game;
             }
         }
-
-        $this->openCell($game, $pos, $row, $col);
-
-        $this->entityManager->flush();
-
-        return $game;
     }
 
     /**
