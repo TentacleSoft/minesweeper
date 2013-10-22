@@ -12,12 +12,14 @@ $(document).ready(function () {
     }, pollingRate);
 
     $('.board-cell.enabled').click(function () {
+        if (game.activePlayer != globals.user.id) {
+            return;
+        }
+
         var row = $(this).data('row'),
             col = $(this).data('col');
         $.post('/games/' + gameId, {row: row, col: col}, function (data) {
             updateInfo(data);
-        }).fail(function () {
-            $('#chat').append('<p class="error">It\'s not your turn</p>')
         });
         console.log('Click (' + row + ', ' + col + ')');
     });
