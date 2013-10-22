@@ -66,7 +66,7 @@ class Game
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -82,14 +82,14 @@ class Game
     public function setPlayers($players)
     {
         $this->players = $players;
-    
+
         return $this;
     }
 
     /**
      * Get players
      *
-     * @return array 
+     * @return array
      */
     public function getPlayers()
     {
@@ -105,14 +105,14 @@ class Game
     public function setBoard($board)
     {
         $this->board = $board;
-    
+
         return $this;
     }
 
     /**
      * Get board
      *
-     * @return array 
+     * @return array
      */
     public function getBoard()
     {
@@ -128,14 +128,14 @@ class Game
     public function setVisibleBoard($visibleBoard)
     {
         $this->visibleBoard = $visibleBoard;
-    
+
         return $this;
     }
 
     /**
      * Get visibleBoard
      *
-     * @return array 
+     * @return array
      */
     public function getVisibleBoard()
     {
@@ -151,14 +151,14 @@ class Game
     public function setScores($scores)
     {
         $this->scores = $scores;
-    
+
         return $this;
     }
 
     /**
      * Get scores
      *
-     * @return array 
+     * @return array
      */
     public function getScores()
     {
@@ -174,14 +174,14 @@ class Game
     public function setChat($chat)
     {
         $this->chat = $chat;
-    
+
         return $this;
     }
 
     /**
      * Get chat
      *
-     * @return string 
+     * @return string
      */
     public function getChat()
     {
@@ -197,14 +197,14 @@ class Game
     public function setActivePlayer($activePlayer)
     {
         $this->activePlayer = $activePlayer;
-    
+
         return $this;
     }
 
     /**
      * Get activePlayer
      *
-     * @return integer 
+     * @return integer
      */
     public function getActivePlayer()
     {
@@ -217,7 +217,7 @@ class Game
     {
         $this->players = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add players
      *
@@ -227,7 +227,7 @@ class Game
     public function addPlayer(\TS\Bundle\MinesweeperBundle\Entity\User $players)
     {
         $this->players[] = $players;
-    
+
         return $this;
     }
 

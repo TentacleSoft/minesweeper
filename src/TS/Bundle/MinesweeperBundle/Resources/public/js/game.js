@@ -50,6 +50,31 @@ function updateInfo(data) {
 
     drawBoard(data.board);
 
+    var scoreboard = $('#scoreboard');
+    scoreboard.find('div[data-player="0"] .score').text(data.scores[0]);
+    scoreboard.find('div[data-player="1"] .score').text(data.scores[1]);
+
+    scoreboard.find('div[data-player="0"] .username').text(data.players[0].username);
+    scoreboard.find('div[data-player="1"] .username').text(data.players[1].username);
+
+    var turn = $('#turn');
+    if (data.activePlayer == globals.user.id) {
+        turn.text('Your turn');
+        if (data.players[0].id == globals.user.id) {
+            turn.addClass('player0');
+        } else {
+            turn.addClass('player1');
+        }
+    } else {
+        if (data.players[0].id == data.activePlayer) {
+            turn.text(data.players[0].name + '\'s turn');
+        } else {
+            turn.text(data.players[1].name + '\'s turn');
+        }
+
+        turn.removeClass('player0').removeClass('player1');
+    }
+
     game = data;
 }
 
@@ -60,19 +85,24 @@ function drawBoard(board) {
         var cell = $(cells[pos]),
             cellValue = board[cell.data('row')][cell.data('col')];
 
-        switch (cellValue) {
-            case 'M':
-                cell.removeClass('enabled').addClass('mine');
-                break;
-            case '':
-                break;
-            case 0:
-                cell.removeClass('enabled').addClass('open');
-                break;
-            default: // if it's a number
-                cell.removeClass('enabled').addClass('open');
-                cell.attr('data-number', cellValue);
-                cell.html(cellValue);
+        if (cell.hasClass('enabled')) {
+            switch (cellValue) {
+                case 'M0':
+                    cell.removeClass('enabled').addClass('mine').attr('data-player', 0);
+                    break;
+                case 'M1':
+                    cell.removeClass('enabled').addClass('mine').attr('data-player', 1);
+                    break;
+                case '':
+                    break;
+                case 0:
+                    cell.removeClass('enabled').addClass('open');
+                    break;
+                default: // if it's a number
+                    cell.removeClass('enabled').addClass('open');
+                    cell.attr('data-number', cellValue);
+                    cell.html(cellValue);
+            }
         }
     }
 }

@@ -9,7 +9,24 @@
 {% endblock %}
 
 {% block navcolumn %}
-{% trans %}Hello{% endtrans %} {{ globals.user.name }}!
+
+<div id="profile">
+{{ globals.user.name }}
+</div>
+
+<div id="scoreboard">
+    <div data-player="0">
+        <div class="score">0</div>
+        <div class="username"></div>
+    </div>
+    <div data-player="1">
+        <div class="score">0</div>
+        <div class="username"></div>
+    </div>
+</div>
+
+<div id="turn"></div>
+
 <div id="chat"></div>
 <form id="form-chat">
     <input type="text" id="text" autocomplete="off" />

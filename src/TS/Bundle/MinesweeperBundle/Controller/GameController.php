@@ -122,8 +122,17 @@ class GameController extends Controller
      */
     private function getGameInfo(Game $game)
     {
+        $players = array();
+        foreach ($game->getPlayers() as $player) {
+            $players[] = array(
+                'id' => $player->getId(),
+                'name' => $player->getName(),
+                'username' => $player->getUsername()
+            );
+        }
+
         return array(
-            'players'      => $game->getPlayers(),
+            'players'      => $players,
             'activePlayer' => $game->getActivePlayer(),
             'scores'       => $game->getScores(),
             'board'        => $game->getVisibleBoard(),

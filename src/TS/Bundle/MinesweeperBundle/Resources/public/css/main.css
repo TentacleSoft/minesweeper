@@ -2,6 +2,70 @@ body {
 
 }
 
+#profile {
+    background-color: #dddddd;
+    font-weight: bold;
+    line-height: 36px;
+    padding-left: 15px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+#scoreboard {
+    color: #ffffff;
+    padding: 0;
+    margin-bottom: 5px;
+}
+
+#scoreboard > div {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+}
+
+#scoreboard .score {
+    font-size: 24px;
+    line-height: 36px;
+}
+
+#scoreboard .username {
+    font-size: 0.8em;
+    padding: 0;
+}
+
+#scoreboard div[data-player="0"] {
+    background-color: #39B300;
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#scoreboard div[data-player="1"] {
+    background-color: #C10000;
+
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#turn {
+    padding: 5px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #dddddd;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+#turn.player0 {
+    color: #ffffff;
+    background-color: #39B300;
+}
+
+#turn.player1 {
+    color: #ffffff;
+    background-color: #C10000;
+}
+
 #chat {
     padding: 5px;
     margin-bottom: 5px;
@@ -18,21 +82,34 @@ body {
 }
 
 #chat .username {
-    font-size: 0.8em;
+    background-color: black;
+    color: white;
+    padding: 2px 3px;
+    margin-right: 5px;
+    border-radius: 5px;
+    font-size: 0.7em;
     font-weight: bold;
 }
 
 #chat .info:before {
-    content: 'INFO> ';
-    color: green;
-    font-size: 0.8em;
+    content: 'INFO';
+    background-color: royalblue;
+    color: white;
+    padding: 2px 3px;
+    margin-right: 5px;
+    border-radius: 5px;
+    font-size: 0.7em;
     font-weight: bold;
 }
 
 #chat .error:before {
-    content: 'ERROR> ';
-    color: red;
-    font-size: 0.8em;
+    content: 'ERROR';
+    background-color: orangered;
+    color: white;
+    padding: 2px 3px;
+    margin-right: 5px;
+    border-radius: 5px;
+    font-size: 0.7em;
     font-weight: bold;
 }
 
@@ -77,8 +154,12 @@ td.board-cell {
     background-color: #f5f5f5;
 }
 
-.board-cell.mine {
-    background: #ffffff url('../images/mine.png');
+.board-cell.mine[data-player="0"] {
+    background: #ffffff url('../images/green_flag_32.png');
+}
+
+.board-cell.mine[data-player="1"] {
+    background: #ffffff url('../images/red_flag_32.png');
 }
 
 .board-cell.open {
@@ -118,6 +199,6 @@ td.board-cell {
 }
 
 .error {
-    color: red;
+    color: orangered;
     font-style: italic;
 }

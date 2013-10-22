@@ -106,17 +106,18 @@ class GameManager
             throw new \Exception(sprintf('User %s is not currently active', $activePlayer));
         }
 
-        $openedCell = $this->openCell($game, $row, $col);
+        $players = $game->getPlayers();
+        $nextPlayerPos = 0;
+        foreach ($players as $pos => $player) {
+            if ($player->getId() === $activePlayer) {
+                $nextPlayerPos = ($pos + 1) % count($players);
+                break;
+            }
+        }
+
+        $openedCell = $this->openCell($game, $pos, $row, $col);
 
         if (Symbols::MINE !== $openedCell) {
-            $players = $game->getPlayers();
-            $nextPlayerPos = 0;
-            foreach ($players as $pos => $player) {
-                if ($player->getId() === $activePlayer) {
-                    $nextPlayerPos = ($pos + 1) % count($players);
-                    break;
-                }
-            }
             $game->setActivePlayer($players[$nextPlayerPos]->getId());
         }
 
@@ -136,7 +137,7 @@ class GameManager
     public function sendChat(Game $game, User $user, $text, $type = null)
     {
         if (null === $type) {
-            $chat = sprintf('%s<p><span class="username">%s> </span>%s</p>', $game->getChat(), $user->getUsername(), $text);
+            $chat = sprintf('%s<p><span class="username">%s</span>%s</p>', $game->getChat(), $user->getUsername(), $text);
         } else {
             $chat = sprintf('%s<p class="%s">%s</p>', $game->getChat(), $type, $text);
         }
@@ -150,12 +151,13 @@ class GameManager
 
     /**
      * @param Game $game
+     * @param int $playerPos
      * @param int $row
      * @param int $col
      *
      * @return string|null Symbol opened (if any)
      */
-    private function openCell(Game &$game, $row, $col)
+    private function openCell(Game &$game, $playerPos, $row, $col)
     {
         $board = $game->getBoard();
         $visibleBoard = $game->getVisibleBoard();
@@ -165,19 +167,26 @@ class GameManager
         }
 
         $visibleBoard[$row][$col] = $board[$row][$col];
+
+        if ($board[$row][$col] === Symbols::MINE) {
+            $visibleBoard[$row][$col] .= $playerPos;
+
+            $scores = $game->getScores();
+            $scores[$playerPos] += 1;
+            $game->setScores($scores);
+        }
+
         $game->setVisibleBoard($visibleBoard);
 
-        if (Symbols::MINE === $board[$row][$col]) {
-            $game->setScores($game->getScores()[0] + 1);
-        } elseif (0 === $board[$row][$col]) {
-            $this->openCell($game, $row - 1, $col - 1);
-            $this->openCell($game, $row - 1, $col    );
-            $this->openCell($game, $row - 1, $col + 1);
-            $this->openCell($game, $row    , $col - 1);
-            $this->openCell($game, $row    , $col + 1);
-            $this->openCell($game, $row + 1, $col - 1);
-            $this->openCell($game, $row + 1, $col    );
-            $this->openCell($game, $row + 1, $col + 1);
+        if (0 === $board[$row][$col]) {
+            $this->openCell($game, $playerPos, $row - 1, $col - 1);
+            $this->openCell($game, $playerPos, $row - 1, $col    );
+            $this->openCell($game, $playerPos, $row - 1, $col + 1);
+            $this->openCell($game, $playerPos, $row    , $col - 1);
+            $this->openCell($game, $playerPos, $row    , $col + 1);
+            $this->openCell($game, $playerPos, $row + 1, $col - 1);
+            $this->openCell($game, $playerPos, $row + 1, $col    );
+            $this->openCell($game, $playerPos, $row + 1, $col + 1);
         }
 
         return $board[$row][$col];
