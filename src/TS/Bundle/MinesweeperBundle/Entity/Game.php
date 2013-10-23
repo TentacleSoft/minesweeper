@@ -242,7 +242,7 @@ class Game
         $this->players->removeElement($players);
     }
 
-    public function isGameOver()
+    public function isOver()
     {
         return $this->activePlayer === Symbols::GAME_OVER;
     }

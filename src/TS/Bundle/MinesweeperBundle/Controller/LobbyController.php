@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
+use TS\Bundle\MinesweeperBundle\Entity\User;
 
 /**
  * Class LobbyController
@@ -27,11 +28,7 @@ class LobbyController extends BaseController
             throw new \HttpRequestException();
         }
 
-        $doctrine = $this->getDoctrine();
-        $lobbyArray = $doctrine->getRepository('TSMinesweeperBundle:Lobby')->findAll();
-
-        /** @var \TS\Bundle\MinesweeperBundle\Entity\Lobby $lobby */
-        $lobby = $lobbyArray[0];
+        $lobby = $this->getLobby();
 
         $userId = $this->getUser()->getId();
 
@@ -39,7 +36,7 @@ class LobbyController extends BaseController
 
         $lobby->addChatLine($userId, $message);
 
-        $doctrine->getManager()->flush();
+        $this->getDoctrine()->getManager()->flush();
 
         return new JsonResponse(
             array(
@@ -53,8 +50,34 @@ class LobbyController extends BaseController
      * @method("GET")
      * @route("/chat")
      */
-    function lobbyInfoAction()
+    public function lobbyInfoAction()
     {
+        $lobby = $this->getLobby();
 
+        return new JsonResponse(
+            array(
+                'chat' => $lobby->getChat(),
+                'users' => array_map(
+                    function(User $user) {
+                        return array(
+                            'id' => $user->getId(),
+                            'name' => $user->getUsername(),
+                        );
+                    },
+                    $lobby->getOnlineUsers()
+                )
+            ),
+            200
+        );
+    }
+
+    /**
+     * @return \TS\Bundle\MinesweeperBundle\Entity\Lobby
+     */
+    private function getLobby()
+    {
+        $lobbies = $this->getDoctrine()->getRepository('TSMinesweeperBundle:Lobby')->findAll();
+
+        return $lobbies[0];
     }
 }

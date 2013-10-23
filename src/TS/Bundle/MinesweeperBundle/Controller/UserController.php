@@ -3,6 +3,7 @@
 namespace TS\Bundle\MinesweeperBundle\Controller;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use TS\Bundle\MinesweeperBundle\Entity\Game;
 use TS\Bundle\MinesweeperBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -52,9 +53,25 @@ class UserController extends Controller
 
     private function getUserInfo(User $user)
     {
+        $active = array();
+        $won = array();
+        $lost = array();
+
+        foreach ($user->getGames() as $game) {
+            if ($game->isOver()) {
+
+            }
+        }
+
         return array(
             'username' => $user->getUsername(),
-            'name' => $user->getName()
+            'name' => $user->getName(),
+            'user'
         );
+    }
+
+    private function getGameInfo(Game $game)
+    {
+
     }
 }
