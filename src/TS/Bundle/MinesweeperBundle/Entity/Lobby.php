@@ -107,4 +107,12 @@ class Lobby
     {
         return $this->onlineUsers;
     }
+
+    public function addChatLine($userId, $message)
+    {
+        $this->chat[] = array(
+            'from' => $userId,
+            'message' => $message,
+        );
+    }
 }
