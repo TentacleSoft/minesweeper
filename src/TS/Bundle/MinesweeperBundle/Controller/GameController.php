@@ -2,15 +2,13 @@
 
 namespace TS\Bundle\MinesweeperBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TS\Bundle\MinesweeperBundle\Entity\Game;
+use TS\Bundle\MinesweeperBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use TS\Bundle\MinesweeperBundle\Service\Symbols;
 
 /**
  * @Route("/games")
@@ -40,12 +38,12 @@ class GameController extends Controller
         }
 
         try {
-            $game = $gameManager->create($players, $activePlayer);
+            $gameId = $gameManager->create($players, $activePlayer);
         } catch (\Exception $e) {
             throw new BadRequestHttpException('Failed to create game: ' . $e->getMessage());
         }
 
-        return new JsonResponse($this->getGameInfo($game));
+        return new JsonResponse($this->getGameInfo($gameId));
     }
 
     /**
@@ -54,7 +52,7 @@ class GameController extends Controller
      */
     public function gameAction($gameId)
     {
-        return new JsonResponse($this->getGameInfo($this->getGame($gameId)));
+        return new JsonResponse($this->getGameInfo($gameId));
     }
 
     /**
@@ -72,13 +70,10 @@ class GameController extends Controller
             throw new BadRequestHttpException('Row or col empty');
         }
 
-        /** @var Game */
-        $game = $this->getGame($gameId);
-
         $gameManager = $this->get('ts_minesweeper.game_manager');
-        $gameManager->open($game, $this->getUser(), $row, $col);
+        $gameManager->open($gameId, $this->getUser(), $row, $col);
 
-        return new JsonResponse($this->getGameInfo($game));
+        return new JsonResponse($this->getGameInfo($gameId));
     }
 
     /**
@@ -98,17 +93,22 @@ class GameController extends Controller
         $gameManager = $this->get('ts_minesweeper.game_manager');
         $gameManager->sendUserChat($gameId, $this->getUser(), $text);
 
-        return new Response($gameManager->get($gameId));
+        return new JsonResponse($this->getGameInfo($gameId));
     }
 
     /**
-     * @param Game $game
+     * @param int $gameId
      *
      * @return array
      */
-    private function getGameInfo(Game $game)
+    private function getGameInfo($gameId)
     {
+        /** @var Game $game */
+        $game = $this->get('ts_minesweeper.game_manager')->get($gameId);
+
         $players = array();
+
+        /** @var User $player */
         foreach ($game->getPlayers() as $player) {
             $players[] = array(
                 'id' => $player->getId(),

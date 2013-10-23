@@ -1,5 +1,5 @@
 ts_minesweeper_homepage:
-    resource: @TSMinesweeperBundle/Controller/DefaultController.php
+    resource: @TSMinesweeperBundle/Controller/WebController.php
     type:     annotation
 
 ts_minesweeper_users:

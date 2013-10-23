@@ -242,8 +242,27 @@ class Game
         $this->players->removeElement($players);
     }
 
+    /**
+     * @return bool
+     */
     public function isOver()
     {
         return $this->activePlayer === Symbols::GAME_OVER;
+    }
+
+    /**
+     * @param int $from
+     * @param string $message
+     */
+    public function addChatLine($from, $message)
+    {
+        if (!is_array($this->chat)) {
+            $this->chat = array();
+        }
+
+        $this->chat[] = array(
+            'from' => $from,
+            'message' => $message,
+        );
     }
 }

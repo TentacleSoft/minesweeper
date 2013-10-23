@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use TS\Bundle\MinesweeperBundle\Entity\Lobby;
+use TS\Bundle\MinesweeperBundle\Service\Symbols;
 
 class LoadLobbyData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -13,9 +14,10 @@ class LoadLobbyData extends AbstractFixture implements OrderedFixtureInterface
     {
         $lobby = new Lobby();
 
-        $lobby->addOnlineUser($this->getReference('user1'))
+        $lobby
+            ->addOnlineUser($this->getReference('user1'))
             ->addOnlineUser($this->getReference('user2'))
-            ->setChat('You are on Example Lobby');
+            ->addChatLine(Symbols::CHAT_INFO, 'You are on Example Lobby');
 
         $manager->persist($lobby);
         $manager->flush();

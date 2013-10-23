@@ -3,6 +3,7 @@
 namespace TS\Bundle\MinesweeperBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Lobby
@@ -38,7 +39,7 @@ class Lobby
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -54,14 +55,14 @@ class Lobby
     public function setChat($chat)
     {
         $this->chat = $chat;
-    
+
         return $this;
     }
 
     /**
      * Get chat
      *
-     * @return array 
+     * @return array
      */
     public function getChat()
     {
@@ -74,7 +75,7 @@ class Lobby
     {
         $this->onlineUsers = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add onlineUsers
      *
@@ -84,7 +85,7 @@ class Lobby
     public function addOnlineUser(\TS\Bundle\MinesweeperBundle\Entity\User $onlineUsers)
     {
         $this->onlineUsers[] = $onlineUsers;
-    
+
         return $this;
     }
 
@@ -101,17 +102,25 @@ class Lobby
     /**
      * Get onlineUsers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOnlineUsers()
     {
         return $this->onlineUsers;
     }
 
-    public function addChatLine($userId, $message)
+    /**
+     * @param int $from
+     * @param string $message
+     */
+    public function addChatLine($from, $message)
     {
+        if (!is_array($this->chat)) {
+            $this->chat = array();
+        }
+
         $this->chat[] = array(
-            'from' => $userId,
+            'from' => $from,
             'message' => $message,
         );
     }

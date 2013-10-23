@@ -26,8 +26,10 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface
         $game->setBoard($board);
         $game->setVisibleBoard($visibleBoard);
 
-        $chat = sprintf('<p class="info">Players: %s</p>', $this->getReference('user1')->getUsername() . ', ' . $this->getReference('user2')->getUsername());
-        $game->setChat($chat);
+        $game->addChatLine(
+            Symbols::CHAT_INFO,
+            sprintf('Players: %s, %s', $this->getReference('user1')->getUsername(), $this->getReference('user2')->getUsername())
+        );
 
         $game->setActivePlayer($this->getReference('user1')->getId());
         $game->setScores(array(0, 0));

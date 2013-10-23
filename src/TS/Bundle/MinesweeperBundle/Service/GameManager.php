@@ -13,9 +13,6 @@ class GameManager
     const BOARD_SIZE = 16;
     const MINES = 49;
 
-    const FROM_INFO = -1;
-    const FROM_ERROR = -2;
-
     /**
      * @var EntityRepository
      */
@@ -54,7 +51,7 @@ class GameManager
      * @param User[] $players
      * @param int|null $activePlayer
      *
-     * @return Game
+     * @return int
      */
     public function create(array $players, $activePlayer = null)
     {
@@ -96,7 +93,7 @@ class GameManager
         $this->entityManager->persist($game);
         $this->entityManager->flush();
 
-        return $game;
+        return $game->getId();
     }
 
     /**
@@ -108,13 +105,11 @@ class GameManager
      * @param int $col
      *
      * @throws \Exception
-     *
-     * @return Game
      */
     public function open($gameId, User $player, $row, $col)
     {
         /** @var Game $game */
-        $game = $this->getGame($gameId);
+        $game = $this->get($gameId);
 
         $activePlayer = $game->getActivePlayer();
         if ($player->getId() !== $activePlayer) {
@@ -127,6 +122,8 @@ class GameManager
                 $this->openCell($game, $pos, $row, $col);
 
                 $this->entityManager->flush();
+
+                return;
             }
         }
 
@@ -164,7 +161,7 @@ class GameManager
     private function sendChat($gameId, $from, $text)
     {
         /** @var Game $game */
-        $game = $this->getGame($gameId);
+        $game = $this->get($gameId);
 
         $chat = $game->getChat();
 
@@ -172,7 +169,7 @@ class GameManager
             unset($chat[0]);
         }
 
-        $chat[] = ChatLineFactory::create($from, $text);
+        $game->addChatLine($from, $text);
 
         $game->setChat($chat);
         $this->entityManager->flush();

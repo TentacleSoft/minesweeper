@@ -8,4 +8,7 @@ final class Symbols
     const UNKNOWN = '';
 
     const GAME_OVER = -1;
+
+    const CHAT_INFO = -1;
+    const CHAT_ERROR = -2;
 }
