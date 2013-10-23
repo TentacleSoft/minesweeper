@@ -50,9 +50,9 @@ class Game
     private $scores;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="chat", type="text")
+     * @ORM\Column(name="chat", type="json_array")
      */
     private $chat;
 
@@ -169,10 +169,10 @@ class Game
     /**
      * Set chat
      *
-     * @param string $chat
+     * @param array $chat
      * @return Game
      */
-    public function setChat($chat)
+    public function setChat(array $chat)
     {
         $this->chat = $chat;
 
@@ -182,7 +182,7 @@ class Game
     /**
      * Get chat
      *
-     * @return string
+     * @return array
      */
     public function getChat()
     {

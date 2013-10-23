@@ -6,11 +6,15 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use TS\Bundle\MinesweeperBundle\Entity\Game;
 use TS\Bundle\MinesweeperBundle\Entity\User;
+use TS\Bundle\MinesweeperBundle\Exception\GameManagerNotFoundException;
 
 class GameManager
 {
     const BOARD_SIZE = 16;
     const MINES = 49;
+
+    const FROM_INFO = -1;
+    const FROM_ERROR = -2;
 
     /**
      * @var EntityRepository
@@ -26,6 +30,24 @@ class GameManager
     {
         $this->gameRepository = $gameRepository;
         $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @param int $gameId
+     *
+     * @throws GameManagerNotFoundException
+     *
+     * @return Game
+     */
+    public function get($gameId)
+    {
+        $game = $this->gameRepository->findOneById($gameId);
+
+        if (!$game) {
+            throw new GameManagerNotFoundException(sprintf('Game %s not found', $gameId));
+        }
+
+        return $game;
     }
 
     /**
@@ -78,19 +100,9 @@ class GameManager
     }
 
     /**
-     * @param int $gameId
-     *
-     * @return Game
-     */
-    public function get($gameId)
-    {
-        return $this->gameRepository->findOneById($gameId);
-    }
-
-    /**
      * Open cell
      *
-     * @param Game $game
+     * @param int $gameId
      * @param User $player
      * @param int $row
      * @param int $col
@@ -99,8 +111,11 @@ class GameManager
      *
      * @return Game
      */
-    public function open(Game $game, User $player, $row, $col)
+    public function open($gameId, User $player, $row, $col)
     {
+        /** @var Game $game */
+        $game = $this->getGame($gameId);
+
         $activePlayer = $game->getActivePlayer();
         if ($player->getId() !== $activePlayer) {
             throw new \Exception(sprintf('User %s is not currently active or game is already over', $activePlayer));
@@ -112,8 +127,6 @@ class GameManager
                 $this->openCell($game, $pos, $row, $col);
 
                 $this->entityManager->flush();
-
-                return $game;
             }
         }
 
@@ -121,26 +134,48 @@ class GameManager
     }
 
     /**
-     * @param Game $game
+     * @param int $gameId
      * @param User $user
      * @param string $text
-     * @param string|null $type [info|error]
      *
      * @return Game
      */
-    public function sendChat(Game $game, User $user, $text, $type = null)
+    public function sendUserChat($gameId, User $user, $text)
     {
-        if (null === $type) {
-            $chat = sprintf('%s<p><span class="username">%s</span>%s</p>', $game->getChat(), $user->getUsername(), $text);
-        } else {
-            $chat = sprintf('%s<p class="%s">%s</p>', $game->getChat(), $type, $text);
+        $this->sendChat($gameId, $user->getId(), $text);
+    }
+
+    public function sendSystemChat($gameId, $text, $type)
+    {
+        $from = static::FROM_INFO;
+
+        if ($type == 'error') {
+            $from = static::FROM_ERROR;
         }
 
+        $this->sendChat($gameId, $from, $text);
+    }
+
+    /**
+     * @param int $gameId
+     * @param int $from user id or system id
+     * @param $text
+     */
+    private function sendChat($gameId, $from, $text)
+    {
+        /** @var Game $game */
+        $game = $this->getGame($gameId);
+
+        $chat = $game->getChat();
+
+        if (count($chat)) {
+            unset($chat[0]);
+        }
+
+        $chat[] = ChatLineFactory::create($from, $text);
+
         $game->setChat($chat);
-
         $this->entityManager->flush();
-
-        return $game;
     }
 
     /**
@@ -151,7 +186,7 @@ class GameManager
      *
      * @return string|null Symbol opened (if any)
      */
-    private function openCell(Game &$game, $playerPos, $row, $col)
+    private function openCell(Game $game, $playerPos, $row, $col)
     {
         $board = $game->getBoard();
         $visibleBoard = $game->getVisibleBoard();

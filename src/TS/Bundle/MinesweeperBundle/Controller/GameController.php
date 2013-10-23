@@ -95,24 +95,10 @@ class GameController extends Controller
             throw new BadRequestHttpException('Empty text');
         }
 
-        /** @var Game */
-        $game = $this->getGame($gameId);
-
         $gameManager = $this->get('ts_minesweeper.game_manager');
-        $gameManager->sendChat($game, $this->getUser(), $text);
+        $gameManager->sendUserChat($gameId, $this->getUser(), $text);
 
-        return new Response('', 204);
-    }
-
-    private function getGame($gameId)
-    {
-        $game = $this->get('ts_minesweeper.game_manager')->get($gameId);
-
-        if (!$game) {
-            throw new NotFoundHttpException(sprintf('Game %s not found', $gameId));
-        }
-
-        return $game;
+        return new Response($gameManager->get($gameId));
     }
 
     /**
