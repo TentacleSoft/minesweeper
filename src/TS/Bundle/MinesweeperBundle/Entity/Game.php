@@ -3,6 +3,7 @@
 namespace TS\Bundle\MinesweeperBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use TS\Bundle\MinesweeperBundle\Service\Symbols;
 
 /**
  * Game
@@ -239,5 +240,10 @@ class Game
     public function removePlayer(\TS\Bundle\MinesweeperBundle\Entity\User $players)
     {
         $this->players->removeElement($players);
+    }
+
+    public function isGameOver()
+    {
+        return $this->activePlayer === Symbols::GAME_OVER;
     }
 }

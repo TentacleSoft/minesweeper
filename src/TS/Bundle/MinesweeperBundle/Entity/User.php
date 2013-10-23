@@ -32,6 +32,13 @@ class User extends BaseUser
     private $games;
 
     /**
+     * @var Lobby
+     *
+     * @ORM\ManyToOne(targetEntity="Lobby", inversedBy="onlineUsers")
+     */
+    private $lobby;
+
+    /**
      * Set name
      *
      * @param string $name
@@ -103,5 +110,28 @@ class User extends BaseUser
     public function getGames()
     {
         return $this->games;
+    }
+
+    /**
+     * Set lobby
+     *
+     * @param \TS\Bundle\MinesweeperBundle\Entity\Lobby $lobby
+     * @return User
+     */
+    public function setLobby(\TS\Bundle\MinesweeperBundle\Entity\Lobby $lobby = null)
+    {
+        $this->lobby = $lobby;
+    
+        return $this;
+    }
+
+    /**
+     * Get lobby
+     *
+     * @return \TS\Bundle\MinesweeperBundle\Entity\Lobby 
+     */
+    public function getLobby()
+    {
+        return $this->lobby;
     }
 }
