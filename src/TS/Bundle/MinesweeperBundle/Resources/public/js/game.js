@@ -7,7 +7,7 @@ var gameId = 1,
 
 $(document).ready(function () {
     setInterval(function () {
-        if (globals != undefined) {
+        if (typeof globals != 'undefined') {
             if (section == 'lobby') {
                 $.getJSON('/lobby/', function (data) {
                     updateLobbyInfo(data);
