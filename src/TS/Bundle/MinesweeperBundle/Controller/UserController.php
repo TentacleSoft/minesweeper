@@ -59,19 +59,32 @@ class UserController extends Controller
 
         foreach ($user->getGames() as $game) {
             if ($game->isOver()) {
-
+                if ($game->getWinner()->getId() === $user->getId()) {
+                    $won[] = $this->getGameInfo($game);
+                } else {
+                    $lost[] = $this->getGameInfo($game);
+                }
+            } else {
+                $active[] = $this->getGameInfo($game);
             }
         }
 
         return array(
             'username' => $user->getUsername(),
             'name' => $user->getName(),
-            'user'
+            'games' => array(
+                'active' => $active,
+                'won' => $won,
+                'lost' => $lost,
+            )
         );
     }
 
     private function getGameInfo(Game $game)
     {
-
+        return array(
+            'id' => $game->getId(),
+            'scores' => $game->getScores(),
+        );
     }
 }
