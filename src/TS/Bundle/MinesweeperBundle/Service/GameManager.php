@@ -108,7 +108,6 @@ class GameManager
      */
     public function open($gameId, User $player, $row, $col)
     {
-        /** @var Game $game */
         $game = $this->get($gameId);
 
         $activePlayer = $game->getActivePlayer();
@@ -120,6 +119,10 @@ class GameManager
         foreach ($players as $pos => $player) {
             if ($player->getId() === $activePlayer) {
                 $this->openCell($game, $pos, $row, $col);
+
+                if ($game->isOver()) {
+                    $game->setWinner($player);
+                }
 
                 $this->entityManager->flush();
 

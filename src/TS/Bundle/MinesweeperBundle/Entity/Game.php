@@ -63,6 +63,12 @@ class Game
      */
     private $activePlayer;
 
+    /**
+     * @var array
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     */
+    private $winner;
 
     /**
      * Get id
@@ -264,5 +270,28 @@ class Game
             'from' => $from,
             'message' => $message,
         );
+    }
+
+    /**
+     * Set winner
+     *
+     * @param \TS\Bundle\MinesweeperBundle\Entity\User $winner
+     * @return Game
+     */
+    public function setWinner(\TS\Bundle\MinesweeperBundle\Entity\User $winner = null)
+    {
+        $this->winner = $winner;
+    
+        return $this;
+    }
+
+    /**
+     * Get winner
+     *
+     * @return \TS\Bundle\MinesweeperBundle\Entity\User 
+     */
+    public function getWinner()
+    {
+        return $this->winner;
     }
 }
