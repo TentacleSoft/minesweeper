@@ -27,7 +27,7 @@ class Lobby
      *
      * @ORM\Column(name="chat", type="json_array")
      */
-    private $chat;
+    private $chat = array();
 
     /**
      * @var ArrayCollection
@@ -115,10 +115,6 @@ class Lobby
      */
     public function addChatLine($from, $message)
     {
-        if (!is_array($this->chat)) {
-            $this->chat = array();
-        }
-
         $this->chat[] = array(
             'from' => $from,
             'message' => $message,

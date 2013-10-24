@@ -39,6 +39,13 @@ class User extends BaseUser
     private $lobby;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $timeLastMessage;
+
+    /**
      * Set name
      *
      * @param string $name
@@ -67,6 +74,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->games = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->timeLastMessage = new \DateTime();
     }
     
     /**
@@ -133,5 +141,28 @@ class User extends BaseUser
     public function getLobby()
     {
         return $this->lobby;
+    }
+
+    /**
+     * Set timeLastMessage
+     *
+     * @param \DateTime $timeLastMessage
+     * @return User
+     */
+    public function setTimeLastMessage(\DateTime $timeLastMessage)
+    {
+        $this->timeLastMessage = $timeLastMessage;
+    
+        return $this;
+    }
+
+    /**
+     * Get timeLastMessage
+     *
+     * @return \DateTime 
+     */
+    public function getTimeLastMessage()
+    {
+        return $this->timeLastMessage;
     }
 }
