@@ -7,4 +7,4 @@ services:
     ts_minesweeper.listener.lobby_accessed:
         class: TS\Bundle\MinesweeperBundle\Listener\LobbyAccessedListener
         tags:
-            - { name: doctrine.event_listener, event: postLoad }
+            - { name: doctrine.event_listener, event: onLobbyLoad }
