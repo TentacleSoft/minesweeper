@@ -36,6 +36,45 @@ class UserController extends Controller
      */
     public function userAction($id)
     {
+        $user = $this->getUserInstance($id);
+
+        return new JsonResponse($this->getUserInfo($user));
+    }
+
+    /**
+     * @Route("/{id}/games")
+     * @Method("GET")
+     */
+    public function getUserGames($id)
+    {
+        $user = $this->getUserInstance($id);
+
+        $games = array_map(function ($game) {
+            $players = array();
+
+            foreach ($game->getPlayers() as $player) {
+                $players[] = array(
+                    'id' => $player->getId(),
+                    'name' => $player->getName(),
+                    'username' => $player->getUsername()
+                );
+            }
+
+            return array(
+                'id'           => $game->getId(),
+                'players'      => $players,
+                'activePlayer' => $game->getActivePlayer(),
+                'scores'       => $game->getScores(),
+                'board'        => $game->getVisibleBoard(),
+                'chat'         => $game->getChat()
+            );
+        }, $user->getGames()->toArray());
+
+        return new JsonResponse($games);
+    }
+
+    private function getUserInstance($id)
+    {
         $userRepository = $this->getDoctrine()->getRepository('TSMinesweeperBundle:User');
 
         if (is_numeric($id)) {
@@ -48,7 +87,7 @@ class UserController extends Controller
             throw new NotFoundHttpException(sprintf('User %s not found', $id));
         }
 
-        return new JsonResponse($this->getUserInfo($user));
+        return $user;
     }
 
     private function getUserInfo(User $user)

@@ -14,13 +14,38 @@ use TS\Bundle\MinesweeperBundle\Entity\User;
  * Class LobbyController
  *
  * @package TS\Bundle\MinesweeperBundle\Controller
- * @Route("/lobby"
+ * @Route("/lobby")
  */
 class LobbyController extends BaseController
 {
     /**
-     * @method("POST")
-     * @route("/chat")
+     * @Route("/")
+     * @Method("GET")
+     */
+    public function lobbyInfoAction()
+    {
+        $lobby = $this->getLobby();
+
+        return new JsonResponse(
+            array(
+                'chat' => $lobby->getChat(),
+                'users' => array_map(
+                    function(User $user) {
+                        return array(
+                            'id' => $user->getId(),
+                            'name' => $user->getUsername(),
+                        );
+                    },
+                    $lobby->getOnlineUsers()->toArray()
+                ),
+            ),
+            200
+        );
+    }
+
+    /**
+     * @Route("/chat")
+     * @Method("POST")
      */
     function chatPostAction(Request $request)
     {
@@ -41,31 +66,6 @@ class LobbyController extends BaseController
         return new JsonResponse(
             array(
                 'chat' => $lobby->getChat(),
-            ),
-            200
-        );
-    }
-
-    /**
-     * @method("GET")
-     * @route("/chat")
-     */
-    public function lobbyInfoAction()
-    {
-        $lobby = $this->getLobby();
-
-        return new JsonResponse(
-            array(
-                'chat' => $lobby->getChat(),
-                'users' => array_map(
-                    function(User $user) {
-                        return array(
-                            'id' => $user->getId(),
-                            'name' => $user->getUsername(),
-                        );
-                    },
-                    $lobby->getOnlineUsers()
-                )
             ),
             200
         );

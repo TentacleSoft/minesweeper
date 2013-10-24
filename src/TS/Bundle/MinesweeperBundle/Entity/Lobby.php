@@ -32,7 +32,7 @@ class Lobby
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="User", mappedBy="players")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="lobby")
      */
     private $onlineUsers;
 

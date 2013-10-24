@@ -14,7 +14,12 @@
 {{ globals.user.name }}
 </div>
 
-<div id="scoreboard">
+<div class="section section-lobby">
+    <header>Online players</header>
+    <ul id="user-list"></ul>
+</div>
+
+<div id="scoreboard" class="section section-game">
     <div data-player="0">
         <div class="score">0</div>
         <div class="username"></div>
@@ -25,7 +30,7 @@
     </div>
 </div>
 
-<div id="turn"></div>
+<div id="turn" class="section section-game"></div>
 
 <div id="chat"></div>
 <form id="form-chat">
@@ -35,7 +40,12 @@
 {% endblock %}
 
 {% block maincolumn %}
-<table id="board" class="table">
+<div class="section-lobby">
+    <header>Your games</header>
+    <ul id="game-list"></ul>
+</div>
+
+<table id="board" class="table section section-game">
     {% for i in 0..15 %}
     <tr>
         {% for j in 0..15 %}

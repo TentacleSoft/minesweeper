@@ -11,6 +11,11 @@ body {
     border-radius: 5px;
 }
 
+#user-list, #game-list {
+    list-style: none;
+    display: block;
+}
+
 #scoreboard {
     color: #ffffff;
     padding: 0;
@@ -201,4 +206,8 @@ td.board-cell {
 .error {
     color: orangered;
     font-style: italic;
+}
+
+.section-game {
+    display: none;
 }

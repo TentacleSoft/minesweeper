@@ -9,3 +9,7 @@ ts_minesweeper_users:
 ts_minesweeper_games:
     resource: @TSMinesweeperBundle/Controller/GameController.php
     type:     annotation
+
+ts_minesweeper_lobby:
+    resource: @TSMinesweeperBundle/Controller/LobbyController.php
+    type:     annotation

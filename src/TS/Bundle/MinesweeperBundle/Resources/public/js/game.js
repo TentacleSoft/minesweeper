@@ -2,13 +2,25 @@
 
 var gameId = 1,
     game = {},
-    pollingRate = 1000;
+    pollingRate = 1000,
+    section = 'lobby';
 
 $(document).ready(function () {
     setInterval(function () {
-        $.getJSON('/games/' + gameId, function (data) {
-            updateInfo(data);
-        });
+        if (globals != undefined) {
+            if (section == 'lobby') {
+                $.getJSON('/lobby/', function (data) {
+                    updateLobbyInfo(data);
+                });
+                $.getJSON('/users/' + globals.user.id + '/games', function (data) {
+                    updateGamesInfo(data);
+                });
+            } else if (section == 'game') {
+                $.getJSON('/games/' + gameId, function (data) {
+                    updateGameInfo(data);
+                });
+            }
+        }
     }, pollingRate);
 
     $('.board-cell.enabled').click(function () {
@@ -19,7 +31,7 @@ $(document).ready(function () {
         var row = $(this).data('row'),
             col = $(this).data('col');
         $.post('/games/' + gameId, {row: row, col: col}, function (data) {
-            updateInfo(data);
+            updateGameInfo(data);
         });
         console.log('Click (' + row + ', ' + col + ')');
     });
@@ -30,7 +42,7 @@ $(document).ready(function () {
         if (text != '') {
             $('#text').val('');
             $.post('/games/' + gameId + '/chat', {text: text}, function (data) {
-                updateInfo(data);
+                updateGameInfo(data);
             });
         }
 
@@ -38,15 +50,13 @@ $(document).ready(function () {
     });
 });
 
-function updateInfo(data) {
-    if (data.board == 'undefined') {
-        return;
-    }
+function updateLobbyInfo(data) {
+    updateChatInfo(data.chat);
+    updateUsersInfo(data.users);
+}
 
-    var chat = $('#chat');
-    if ($('<div>').html(data.chat).html() != chat.html()) {
-        chat.html(data.chat).scrollTop(chat[0].scrollHeight);
-    }
+function updateGameInfo(data) {
+    updateChatInfo(data.chat);
 
     drawBoard(data.board);
 
@@ -76,6 +86,51 @@ function updateInfo(data) {
     }
 
     game = data;
+}
+
+function updateChatInfo(chatData) {
+    var chat = $('#chat').html(''),
+        chatLines = '';
+
+    for (var chatLineKey in chatData) {
+        var chatLine = chatData[chatLineKey],
+            line = $('<li>').text(chatLine.message);
+
+        switch (chatLine.from) {
+            case -1:
+                line.addClass('info');
+                break;
+            case -2:
+                line.addClass('error');
+                break;
+            default:
+                line.prepend($('<span>').text(line.from));
+        }
+
+        chatLines += line.html();
+    }
+
+    chat.html(chatLines).scrollTop(chat[0].scrollHeight);
+}
+
+function updateUsersInfo(usersData) {
+    var userList = $('#user-list').html('');
+
+    for (var userKey in usersData) {
+        var user = usersData[userKey],
+            userElement = $('<li>').text(user.username + ' (' + user.games.won + '-' + user.games.lost + ')');
+        userList.append(userElement);
+    }
+}
+
+function updateGamesInfo(gamesData) {
+    var gameList = $('#game-list').html('');
+
+    for (var gameKey in gamesData) {
+        var game = gamesData[gameKey],
+            gameElement = $('<li>').text(game.id);
+        gameList.append(gameElement);
+    }
 }
 
 function drawBoard(board) {
