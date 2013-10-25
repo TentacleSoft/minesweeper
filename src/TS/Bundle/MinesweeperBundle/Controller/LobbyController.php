@@ -55,10 +55,13 @@ class LobbyController extends BaseController
 
         $lobby = $this->getLobby();
 
-        $userId = $this->getUser()->getId();
+        /** @var User $user */
+        $user = $this->getUser();
+        $userId = $user->getId();
 
         $message = $request->request->get('message');
 
+        $user->setTimeLastMessage(new \DateTime());
         $lobby->addChatLine($userId, $message);
 
         $this->getDoctrine()->getManager()->flush();

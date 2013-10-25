@@ -54,7 +54,7 @@ class Game
      *
      * @ORM\Column(name="chat", type="json_array")
      */
-    private $chat;
+    private $chat = array();
 
     /**
      * @var integer
@@ -262,10 +262,6 @@ class Game
      */
     public function addChatLine($from, $message)
     {
-        if (!is_array($this->chat)) {
-            $this->chat = array();
-        }
-
         $this->chat[] = array(
             'from' => $from,
             'message' => $message,
