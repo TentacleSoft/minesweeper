@@ -33,6 +33,11 @@ class GameController extends Controller
 
         $players = array();
         $playerIdsArray = explode(',', $playerIds);
+
+        if (!in_array($this->getUser()->getId(), $playerIdsArray)) {
+            throw new BadRequestHttpException('Player is not in the new game');
+        }
+
         foreach ($playerIdsArray as $playerId) {
             $players[] = $userRepository->findOneById($playerId);
         }
@@ -124,6 +129,7 @@ class GameController extends Controller
         }
 
         return array(
+            'id'           => $gameId,
             'players'      => $players,
             'activePlayer' => $game->getActivePlayer(),
             'scores'       => $game->getScores(),

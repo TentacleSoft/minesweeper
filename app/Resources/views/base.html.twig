@@ -11,7 +11,7 @@
 <body>
 <div id="container">
     <div class="span3">
-        <h1>{% trans %}Minesweeper{% endtrans %}</h1>
+        <h1 id="title"><a href="{{ path('ts_minesweeper_web_index') }}">{% trans %}Minesweeper{% endtrans %}</a></h1>
         {% block navcolumn %}{% endblock %}
     </div>
     <div id="board-container" class="span9">

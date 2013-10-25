@@ -23,6 +23,12 @@ $(document).ready(function () {
         }
     }, pollingRate);
 
+    $('#title').find('a').click(function (event) {
+        event.preventDefault();
+
+        changeSection('lobby');
+    });
+
     $('.board-cell.enabled').click(function () {
         if (game.activePlayer != globals.user.id) {
             return;
@@ -37,12 +43,13 @@ $(document).ready(function () {
     });
 
     $('#form-chat').submit(function () {
-        var message = $('#message').val();
+        var $message = $('#message'),
+            message = $message.val();
 
         if (message != '') {
             var url;
 
-            $('#message').val('');
+            $message.val('');
 
             if (section == 'lobby') {
                 url = '/lobby/chat';
@@ -57,6 +64,28 @@ $(document).ready(function () {
 
         return false;
     });
+
+    $('#game-list').find('a').on('click', function (event) {
+        event.preventDefault();
+
+        $.getJSON($(this).attr('href'), function (data) {
+            updateGameInfo(data);
+            changeSection('game');
+        });
+
+        return false;
+    });
+
+    $('#user-list').find('a').on('click', function (event) {
+        event.preventDefault();
+
+        $.post($(this).attr('href'), function (data) {
+            updateGameInfo(data);
+            changeSection('game');
+        });
+
+        return false;
+    });
 });
 
 function updateLobbyInfo(data) {
@@ -65,6 +94,8 @@ function updateLobbyInfo(data) {
 }
 
 function updateGameInfo(data) {
+    gameId = data.id;
+
     updateChatInfo(data.chat);
 
     drawBoard(data.board);
@@ -125,9 +156,13 @@ function updateUsersInfo(usersData) {
     var userList = $('#user-list').html('');
 
     for (var userKey in usersData) {
-        var user = usersData[userKey],
-            userElement = $('<li>').text(user.username + ' (' + user.games.won.length + '-' + user.games.lost.length + ')');
-        userList.append(userElement);
+        var user = usersData[userKey];
+
+        if (user.id != globals.user.id) {
+            var userElement = $('<li>').text(user.username + ' (' + user.games.won.length + '-' + user.games.lost.length + ')'),
+                link = $('<a>').attr('href', '/games/' + '?players=' + globals.user.id + ',' + user.id).text('New game');
+            userList.append(link.click(onUserClick).add(userElement));
+        }
     }
 }
 
@@ -140,8 +175,9 @@ function updateGamesInfo(gamesData) {
             player2 = game.players[1].username,
             score1 = game.scores[0],
             score2 = game.scores[1],
-            gameElement = $('<li>').text(player1 + ' ' + score1 + ' - ' + score2 + ' ' + player2);
-        gameList.append(gameElement);
+            gameElement = $('<li>').text(player1 + ' ' + score1 + ' - ' + score2 + ' ' + player2),
+            link = $('<a>').attr('href', '/games/' + game.id);
+        gameList.append(link.append(gameElement).click(onGameClick));
     }
 }
 
@@ -174,7 +210,32 @@ function drawBoard(board) {
     }
 }
 
+function clearBoard() {
+    $('.board-cell').removeClass().addClass('board-cell').addClass('enabled').html('');
+}
+
 function changeSection(newSection) {
+    section = newSection;
+    clearBoard();
+    $('#chat').html('');
     $('.section').hide();
     $('.section-' + newSection).show();
 }
+
+var onGameClick = function (event) {
+    event.preventDefault();
+
+    $.getJSON($(this).attr('href'), function (data) {
+        updateGameInfo(data);
+        changeSection('game');
+    });
+};
+
+var onUserClick = function (event) {
+    event.preventDefault();
+
+    $.post($(this).attr('href'), function (data) {
+        updateGameInfo(data);
+        changeSection('game');
+    });
+};

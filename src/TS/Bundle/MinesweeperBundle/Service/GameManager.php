@@ -67,12 +67,6 @@ class GameManager
 
         $game->setScores($scores);
 
-        $playerNames = implode(', ', array_map(function (User $player) {
-            return sprintf('%s <%s>', $player->getName(), $player->getUsername());
-        }, $players));
-        $chat = sprintf('<p class="info">Players: %s</p>', $playerNames);
-        $game->setChat($chat);
-
         if (null === $activePlayer) {
             $activePlayer = array_rand(array_map(function (User $player) {
                 return $player->getId();
@@ -166,15 +160,7 @@ class GameManager
         /** @var Game $game */
         $game = $this->get($gameId);
 
-        $chat = $game->getChat();
-
-        if (count($chat)) {
-            unset($chat[0]);
-        }
-
         $game->addChatLine($from, $message);
-
-        $game->setChat($chat);
         $this->entityManager->flush();
     }
 

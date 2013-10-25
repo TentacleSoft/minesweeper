@@ -123,12 +123,13 @@ class UserManager
         }
 
         return array(
+            'id'       => $user->getId(),
             'username' => $user->getUsername(),
-            'name' => $user->getName(),
-            'games' => array(
+            'name'     => $user->getName(),
+            'games'    => array(
                 'active' => $active,
-                'won' => $won,
-                'lost' => $lost,
+                'won'    => $won,
+                'lost'   => $lost,
             )
         );
     }
@@ -136,7 +137,7 @@ class UserManager
     private function getGameInfo(Game $game)
     {
         return array(
-            'id' => $game->getId(),
+            'id'     => $game->getId(),
             'scores' => $game->getScores(),
         );
     }
