@@ -9,7 +9,7 @@ class LobbyAccessedListener
 {
     const CHAT_IDLE_TIME = 60;
 
-    public function onLobbyLoad(LifecycleEventArgs $event)
+    public function postLoad(LifecycleEventArgs $event)
     {
         /** @var Lobby $entity */
         $entity = $event->getEntity();
