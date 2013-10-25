@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use TS\Bundle\MinesweeperBundle\Entity\Game;
 use TS\Bundle\MinesweeperBundle\Entity\User;
-use TS\Bundle\MinesweeperBundle\Exception\GameManagerNotFoundException;
+use TS\Bundle\MinesweeperBundle\Exception\GameNotFoundException;
 
 class GameManager
 {
@@ -32,7 +32,7 @@ class GameManager
     /**
      * @param int $gameId
      *
-     * @throws GameManagerNotFoundException
+     * @throws GameNotFoundException
      *
      * @return Game
      */
@@ -41,7 +41,7 @@ class GameManager
         $game = $this->gameRepository->findOneById($gameId);
 
         if (!$game) {
-            throw new GameManagerNotFoundException(sprintf('Game %s not found', $gameId));
+            throw new GameNotFoundException(sprintf('Game %s not found', $gameId));
         }
 
         return $game;
@@ -142,15 +142,15 @@ class GameManager
      */
     public function sendUserChat($gameId, User $user, $message)
     {
-        $this->sendChat($gameId, $user->getId(), $message);
+        $this->sendChat($gameId, $user->getUsername(), $message);
     }
 
     public function sendSystemChat($gameId, $message, $type)
     {
-        $from = static::FROM_INFO;
+        $from = Symbols::CHAT_INFO;
 
         if ($type == 'error') {
-            $from = static::FROM_ERROR;
+            $from = Symbols::CHAT_ERROR;
         }
 
         $this->sendChat($gameId, $from, $message);

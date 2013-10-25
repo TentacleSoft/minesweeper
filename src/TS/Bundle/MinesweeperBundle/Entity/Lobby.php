@@ -77,19 +77,6 @@ class Lobby
     }
 
     /**
-     * Add onlineUsers
-     *
-     * @param \TS\Bundle\MinesweeperBundle\Entity\User $onlineUsers
-     * @return Lobby
-     */
-    public function addOnlineUser(\TS\Bundle\MinesweeperBundle\Entity\User $onlineUsers)
-    {
-        $this->onlineUsers[] = $onlineUsers;
-
-        return $this;
-    }
-
-    /**
      * Remove onlineUsers
      *
      * @param \TS\Bundle\MinesweeperBundle\Entity\User $onlineUsers
@@ -97,16 +84,6 @@ class Lobby
     public function removeOnlineUser(\TS\Bundle\MinesweeperBundle\Entity\User $onlineUsers)
     {
         $this->onlineUsers->removeElement($onlineUsers);
-    }
-
-    /**
-     * Get onlineUsers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getOnlineUsers()
-    {
-        return $this->onlineUsers;
     }
 
     /**

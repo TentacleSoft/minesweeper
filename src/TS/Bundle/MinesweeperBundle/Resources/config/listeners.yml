@@ -3,8 +3,3 @@ services:
         class: TS\Bundle\MinesweeperBundle\Listener\GameManagerNotFoundExceptionListener
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
-
-    ts_minesweeper.listener.lobby_accessed:
-        class: TS\Bundle\MinesweeperBundle\Listener\LobbyAccessedListener
-        tags:
-            - { name: doctrine.event_listener, event: postLoad}

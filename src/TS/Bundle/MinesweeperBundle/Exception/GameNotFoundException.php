@@ -2,7 +2,7 @@
 
 namespace TS\Bundle\MinesweeperBundle\Exception;
 
-class GameManagerNotFoundException extends \Exception
+class GameNotFoundException extends \Exception
 {
 
 }

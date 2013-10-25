@@ -21,13 +21,9 @@ class UserController extends Controller
      */
     public function usersAction()
     {
-        $users = $this->getDoctrine()->getRepository('TSMinesweeperBundle:User')->findAll();
+        $userManager = $this->get('ts_minesweeper.user_manager');
 
-        return new JsonResponse(
-            array_map(function ($user) {
-                return $this->getUserInfo($user);
-            }, $users)
-        );
+        return new JsonResponse($userManager->getAllUsersInfo());
     }
 
     /**
@@ -36,94 +32,19 @@ class UserController extends Controller
      */
     public function userAction($id)
     {
-        $user = $this->getUserInstance($id);
+        $userManager = $this->get('ts_minesweeper.user_manager');
 
-        return new JsonResponse($this->getUserInfo($user));
+        return new JsonResponse($userManager->getUserInfo($id));
     }
 
     /**
-     * @Route("/{id}/games")
+     * @Route("/{userId}/games")
      * @Method("GET")
      */
-    public function getUserGames($id)
+    public function userGamesAction($userId)
     {
-        $user = $this->getUserInstance($id);
+        $userManager = $this->get('ts_minesweeper.user_manager');
 
-        $games = array_map(function ($game) {
-            $players = array();
-
-            foreach ($game->getPlayers() as $player) {
-                $players[] = array(
-                    'id' => $player->getId(),
-                    'name' => $player->getName(),
-                    'username' => $player->getUsername()
-                );
-            }
-
-            return array(
-                'id'           => $game->getId(),
-                'players'      => $players,
-                'activePlayer' => $game->getActivePlayer(),
-                'scores'       => $game->getScores(),
-                'board'        => $game->getVisibleBoard(),
-                'chat'         => $game->getChat()
-            );
-        }, $user->getGames()->toArray());
-
-        return new JsonResponse($games);
-    }
-
-    private function getUserInstance($id)
-    {
-        $userRepository = $this->getDoctrine()->getRepository('TSMinesweeperBundle:User');
-
-        if (is_numeric($id)) {
-            $user = $userRepository->find($id);
-        } else {
-            $user = $userRepository->findOneByUsername($id);
-        }
-
-        if (!$user) {
-            throw new NotFoundHttpException(sprintf('User %s not found', $id));
-        }
-
-        return $user;
-    }
-
-    private function getUserInfo(User $user)
-    {
-        $active = array();
-        $won = array();
-        $lost = array();
-
-        foreach ($user->getGames() as $game) {
-            if ($game->isOver()) {
-                if ($game->getWinner()->getId() === $user->getId()) {
-                    $won[] = $this->getGameInfo($game);
-                } else {
-                    $lost[] = $this->getGameInfo($game);
-                }
-            } else {
-                $active[] = $this->getGameInfo($game);
-            }
-        }
-
-        return array(
-            'username' => $user->getUsername(),
-            'name' => $user->getName(),
-            'games' => array(
-                'active' => $active,
-                'won' => $won,
-                'lost' => $lost,
-            )
-        );
-    }
-
-    private function getGameInfo(Game $game)
-    {
-        return array(
-            'id' => $game->getId(),
-            'scores' => $game->getScores(),
-        );
+        return new JsonResponse($userManager->getUserGames($userId));
     }
 }

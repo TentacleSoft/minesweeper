@@ -126,7 +126,7 @@ function updateUsersInfo(usersData) {
 
     for (var userKey in usersData) {
         var user = usersData[userKey],
-            userElement = $('<li>').text(user.username + ' (' + user.games.won + '-' + user.games.lost + ')');
+            userElement = $('<li>').text(user.username + ' (' + user.games.won.length + '-' + user.games.lost.length + ')');
         userList.append(userElement);
     }
 }
@@ -136,7 +136,11 @@ function updateGamesInfo(gamesData) {
 
     for (var gameKey in gamesData) {
         var game = gamesData[gameKey],
-            gameElement = $('<li>').text(game.id);
+            player1 = game.players[0].username,
+            player2 = game.players[1].username,
+            score1 = game.scores[0],
+            score2 = game.scores[1],
+            gameElement = $('<li>').text(player1 + ' ' + score1 + ' - ' + score2 + ' ' + player2);
         gameList.append(gameElement);
     }
 }
@@ -168,4 +172,9 @@ function drawBoard(board) {
             }
         }
     }
+}
+
+function changeSection(newSection) {
+    $('.section').hide();
+    $('.section-' + newSection).show();
 }

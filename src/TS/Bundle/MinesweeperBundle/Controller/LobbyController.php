@@ -27,19 +27,12 @@ class LobbyController extends BaseController
     public function lobbyInfoAction()
     {
         $lobby = $this->getLobby();
+        $userManager = $this->get('ts_minesweeper.user_manager');
 
         return new JsonResponse(
             array(
                 'chat' => $lobby->getChat(),
-                'users' => array_map(
-                    function(User $user) {
-                        return array(
-                            'id' => $user->getId(),
-                            'name' => $user->getUsername(),
-                        );
-                    },
-                    $lobby->getOnlineUsers()->toArray()
-                ),
+                'users' => $userManager->getAllUsersInfo()
             ),
             200
         );
@@ -78,12 +71,11 @@ class LobbyController extends BaseController
 
         /** @var User $user */
         $user = $this->getUser();
-        $userId = $user->getId();
+        $username = $user->getUsername();
 
         $message = $request->request->get('message');
 
-        $user->setTimeLastMessage(new \DateTime());
-        $lobby->addChatLine($userId, $message);
+        $lobby->addChatLine($username, $message);
 
         $this->getDoctrine()->getManager()->flush();
 
