@@ -2,6 +2,12 @@ body {
 
 }
 
+header {
+    padding: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
 #profile {
     background-color: #dddddd;
     font-weight: bold;
@@ -13,7 +19,22 @@ body {
 
 #user-list, #game-list {
     list-style: none;
+
+    padding: 5px;
+    background-color: #dddddd;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    margin-left: 0;
+}
+
+#user-list li, #game-list li {
     display: block;
+    border-bottom: #ffffff;
+}
+
+#user-list {
+    height: 200px;
+    overflow: scroll;
 }
 
 #scoreboard {
@@ -118,7 +139,7 @@ body {
     font-weight: bold;
 }
 
-#text {
+#message {
     width: 257px;
 }
 

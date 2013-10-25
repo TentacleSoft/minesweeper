@@ -37,12 +37,21 @@ $(document).ready(function () {
     });
 
     $('#form-chat').submit(function () {
-        var text = $('#text').val();
+        var message = $('#message').val();
 
-        if (text != '') {
-            $('#text').val('');
-            $.post('/games/' + gameId + '/chat', {text: text}, function (data) {
-                updateGameInfo(data);
+        if (message != '') {
+            var url;
+
+            $('#message').val('');
+
+            if (section == 'lobby') {
+                url = '/lobby/chat';
+            } else if (section == 'game') {
+                url = '/games/' + gameId + '/chat';
+            }
+
+            $.post(url, {message: message}, function (data) {
+                updateChatInfo(data.chat);
             });
         }
 
@@ -89,12 +98,11 @@ function updateGameInfo(data) {
 }
 
 function updateChatInfo(chatData) {
-    var chat = $('#chat').html(''),
-        chatLines = '';
+    var chat = $('#chat').html('');
 
     for (var chatLineKey in chatData) {
         var chatLine = chatData[chatLineKey],
-            line = $('<li>').text(chatLine.message);
+            line = $('<p>').text(chatLine.message);
 
         switch (chatLine.from) {
             case -1:
@@ -104,13 +112,13 @@ function updateChatInfo(chatData) {
                 line.addClass('error');
                 break;
             default:
-                line.prepend($('<span>').text(line.from));
+                line.prepend($('<span>').text(chatLine.from).addClass('username'));
         }
 
-        chatLines += line.html();
+        chat.append(line);
     }
 
-    chat.html(chatLines).scrollTop(chat[0].scrollHeight);
+    chat.scrollTop(chat[0].scrollHeight);
 }
 
 function updateUsersInfo(usersData) {

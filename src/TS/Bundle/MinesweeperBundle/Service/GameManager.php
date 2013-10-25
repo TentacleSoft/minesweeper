@@ -136,16 +136,16 @@ class GameManager
     /**
      * @param int $gameId
      * @param User $user
-     * @param string $text
+     * @param string $message
      *
      * @return Game
      */
-    public function sendUserChat($gameId, User $user, $text)
+    public function sendUserChat($gameId, User $user, $message)
     {
-        $this->sendChat($gameId, $user->getId(), $text);
+        $this->sendChat($gameId, $user->getId(), $message);
     }
 
-    public function sendSystemChat($gameId, $text, $type)
+    public function sendSystemChat($gameId, $message, $type)
     {
         $from = static::FROM_INFO;
 
@@ -153,15 +153,15 @@ class GameManager
             $from = static::FROM_ERROR;
         }
 
-        $this->sendChat($gameId, $from, $text);
+        $this->sendChat($gameId, $from, $message);
     }
 
     /**
      * @param int $gameId
      * @param int $from user id or system id
-     * @param $text
+     * @param $message
      */
-    private function sendChat($gameId, $from, $text)
+    private function sendChat($gameId, $from, $message)
     {
         /** @var Game $game */
         $game = $this->get($gameId);
@@ -172,7 +172,7 @@ class GameManager
             unset($chat[0]);
         }
 
-        $game->addChatLine($from, $text);
+        $game->addChatLine($from, $message);
 
         $game->setChat($chat);
         $this->entityManager->flush();

@@ -84,16 +84,22 @@ class GameController extends Controller
     {
         $request = $this->getRequest();
 
-        $text = $request->get('text');
+        $message = $request->get('message');
 
-        if (empty($text)) {
+        if (empty($message)) {
             throw new BadRequestHttpException('Empty text');
         }
 
         $gameManager = $this->get('ts_minesweeper.game_manager');
-        $gameManager->sendUserChat($gameId, $this->getUser(), $text);
+        $gameManager->sendUserChat($gameId, $this->getUser(), $message);
 
-        return new JsonResponse($this->getGameInfo($gameId));
+        /** @var Game $game */
+        $game = $this->get('ts_minesweeper.game_manager')->get($gameId);
+
+        return new JsonResponse(
+            array('chat' => $game->getChat()),
+            200
+        );
     }
 
     /**
