@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use TS\Bundle\MinesweeperBundle\Entity\User;
 
 /**
@@ -44,10 +46,29 @@ class LobbyController extends BaseController
     }
 
     /**
+     * @Route("/users/{userId}", requirements={"userId"="\d+"})
+     * @Method("PUT")
+     */
+    public function lobbyJoinAction($userId)
+    {
+        $user = $this->getUser();
+        if ($userId !== $user->getId()) {
+            throw new AccessDeniedHttpException('This is not your user Id');
+        }
+
+        if (null === $user->getLobby()) {
+            $user->setLobby($this->getLobby());
+            return new Response('', 201);
+        } else {
+            return new Response('', 204);
+        }
+    }
+
+        /**
      * @Route("/chat")
      * @Method("POST")
      */
-    function chatPostAction(Request $request)
+    public function chatPostAction(Request $request)
     {
         if (!$request->request->has('message')) {
             throw new \HttpRequestException();
