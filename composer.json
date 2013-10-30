@@ -36,7 +36,8 @@
         "braincrafted/bootstrap-bundle": "1.4.*",
         "twitter/bootstrap": "2.3.*",
         "jquery/jquery": "1.9.*",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "guilleferrer/angularjsbundle" :"dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"

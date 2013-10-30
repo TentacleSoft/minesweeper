@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new TS\Bundle\MinesweeperBundle\TSMinesweeperBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new TS\Bundle\UserBundle\TSUserBundle(),
+            new Udf\AngularJSBundle\UdfAngularJSBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
