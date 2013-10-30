@@ -3,7 +3,7 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    {% stylesheets '@TSMinesweeperBundle/Resources/public/less/main.less' %}
+    {% stylesheets '@TSMinesweeperBundle/Resources/public/less/*' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
     {% endstylesheets %}
 {% endblock %}
