@@ -1,0 +1,116 @@
+@import 'variables';
+
+body {
+    background-color: @backgroundColor;
+    color: @primaryColor;
+}
+
+header {
+    padding: @smallSpace;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+#title a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#profile {
+    background-color: @tertiaryColor;
+    font-weight: bold;
+    line-height: @lineHeight;
+    padding-left: (@smallSpace + @mediumSpace);
+    margin-bottom: @smallSpace;
+
+    .roundedBorder;
+}
+
+#user-list, #game-list {
+    list-style: none;
+
+    padding: @smallSpace;
+    background-color: @tertiaryColor;
+    margin-bottom: @smallSpace;
+    margin-left: 0;
+
+    .roundedBorder;
+
+    li {
+        display: block;
+        border-bottom: @backgroundColor;
+    }
+}
+
+#user-list {
+    height: 200px;
+    overflow: scroll;
+}
+
+#user-list a {
+    float: right;
+}
+
+#chat {
+    padding: @smallSpace;
+    margin-bottom: @smallSpace;
+
+    height: 200px;
+    overflow: scroll;
+    text-align: left;
+
+    .standardBorder;
+    .roundedBorder;
+
+    p {
+        margin-bottom: 0;
+    }
+
+    .username {
+        background-color: black;
+        color: @backgroundColor;
+        padding: 2px 3px;
+        margin-right: @smallSpace;
+        font-size: 0.7em;
+        font-weight: bold;
+
+        .roundedBorder;
+    }
+
+    .info:before {
+        content: 'INFO';
+        background-color: royalblue;
+        color: @backgroundColor;
+        padding: 2px 3px;
+        margin-right: @smallSpace;
+        font-size: 0.7em;
+        font-weight: bold;
+
+        .roundedBorder;
+    }
+
+    .error:before {
+        content: 'ERROR';
+        background-color: orangered;
+        color: white;
+        padding: 2px 3px;
+        margin-right: @smallSpace;
+        font-size: 0.7em;
+        font-weight: bold;
+
+        .roundedBorder;
+    }
+}
+
+#message {
+    width: 257px;
+}
+
+.error {
+    color: orangered;
+    font-style: italic;
+}
+
+.section-game {
+    display: none;
+}
