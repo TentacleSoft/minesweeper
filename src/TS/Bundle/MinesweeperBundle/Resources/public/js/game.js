@@ -6,6 +6,7 @@ var gameId = 1,
     section = 'lobby';
 
 $(document).ready(function () {
+    return;
     setInterval(function () {
         if (typeof globals != 'undefined') {
             if (section == 'lobby') {

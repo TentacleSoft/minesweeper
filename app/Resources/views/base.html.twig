@@ -1,5 +1,9 @@
 {% extends 'UdfAngularJSBundle::angular_base.html.twig' %}
 
+{% block htmlhead %}
+<html ng-app="minesweeperApp">
+{% endblock %}
+
 {% block title %}{% trans %}Minesweeper{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
@@ -7,22 +11,30 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
+
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
 
-    {% javascripts '@TSMinesweeperBundle/Resources/public/js/game.js' %}
+    {% javascripts '@TSMinesweeperBundle/Resources/public/js/*' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
 
-{% block body %}{% spaceless %}
-    <div id="container">
-        <div class="span3">
-            <h1 id="title"><a href="{{ path('ts_minesweeper_web_index') }}">{% trans %}Minesweeper{% endtrans %}</a></h1>
-            {% block navcolumn %}{% endblock %}
+{% block body %}
+    {% spaceless %}
+        <div id="container">
+            <div class="span3">
+                <h1 id="title">
+                    <a href="{{ path('ts_minesweeper_web_index') }}">
+                        {% trans %}Minesweeper{% endtrans %}
+                    </a>
+                </h1>
+                {% block navcolumn %}{% endblock %}
+            </div>
+            <div id="board-container" class="span9">
+                {% block maincolumn %}{% endblock %}
+            </div>
         </div>
-        <div id="board-container" class="span9">
-            {% block maincolumn %}{% endblock %}
-        </div>
-    </div>
-{% endspaceless %}{% endblock %}
+    {% endspaceless %}
+{% endblock %}
