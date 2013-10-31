@@ -55,14 +55,16 @@ class UserManager
         $user = $this->getUser($userId);
 
         $games = array_map(function (Game $game) {
+            $scores = $game->getScores();
             $players = array();
 
             /** @var User $player */
-            foreach ($game->getPlayers() as $player) {
+            foreach ($game->getPlayers() as $key => $player) {
                 $players[] = array(
                     'id' => $player->getId(),
                     'name' => $player->getName(),
-                    'username' => $player->getUsername()
+                    'username' => $player->getUsername(),
+                    'score' => $scores[$key]
                 );
             }
 
@@ -70,7 +72,6 @@ class UserManager
                 'id'           => $game->getId(),
                 'players'      => $players,
                 'activePlayer' => $game->getActivePlayer(),
-                'scores'       => $game->getScores(),
                 'board'        => $game->getVisibleBoard(),
                 'chat'         => $game->getChat()
             );

@@ -48,6 +48,18 @@ header {
     }
 }
 
+#game-list {
+    .game-player {
+        &:after {
+            content: '- ';
+        }
+
+        &:last-child:after {
+            content: '';
+        }
+    }
+}
+
 #chat {
     margin-bottom: @smallSpace;
 

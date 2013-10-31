@@ -45,7 +45,13 @@
         <header>Your games</header>
         {% verbatim %}
         <ul id="game-list">
-            <li ng-repeat="game in games">{{ game }}</li>
+            <li ng-repeat="game in games">
+                <a href="{{ 'games/' + game.id }}">
+                    <span class="game-player" ng-repeat="player in game.players">
+                        {{ player.name }}: {{ player.score }}
+                    </span>
+                </a>
+            </li>
         </ul>
         {% endverbatim %}
     </div>

@@ -117,14 +117,16 @@ class GameController extends Controller
         /** @var Game $game */
         $game = $this->get('ts_minesweeper.game_manager')->get($gameId);
 
+        $scores = $game->getScores();
         $players = array();
 
         /** @var User $player */
-        foreach ($game->getPlayers() as $player) {
+        foreach ($game->getPlayers() as $key => $player) {
             $players[] = array(
                 'id' => $player->getId(),
                 'name' => $player->getName(),
-                'username' => $player->getUsername()
+                'username' => $player->getUsername(),
+                'score' => $scores[$key]
             );
         }
 
@@ -132,7 +134,6 @@ class GameController extends Controller
             'id'           => $gameId,
             'players'      => $players,
             'activePlayer' => $game->getActivePlayer(),
-            'scores'       => $game->getScores(),
             'board'        => $game->getVisibleBoard(),
             'chat'         => $game->getChat()
         );

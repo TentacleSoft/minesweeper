@@ -1,8 +1,7 @@
 var minesweeperApp = angular.module('minesweeperApp', []);
 
-minesweeperApp.controller('MainCtrl', function MainCtrl($scope) {
-    $scope.games = [
-        'Test Game 1',
-        'Game 2'
-    ]
+minesweeperApp.controller('MainCtrl', function MainCtrl($scope, $http) {
+    $http.get('/users/' + globals.user.id + '/games').success(function (data) {
+        $scope.games = data;
+    });
 });
