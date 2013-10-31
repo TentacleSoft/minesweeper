@@ -16,10 +16,25 @@
 
 @lineHeight: 36px;
 
-.standardBorder {
-    border: 1px solid @tertiaryColor;
+.standardBorder (@borderColor: @tertiaryColor) {
+    border: 1px solid @borderColor;
 }
 
 .roundedBorder {
     border-radius: @smallSpace;
+}
+
+.roundedBox (@bgColor: @tertiaryColor, @borderColor: @tertiaryColor, @color: @primaryColor) {
+    padding: @smallSpace;
+    color: @color;
+    background-color: @bgColor;
+    .box-shadow(0, 1px, 2px, @secondaryColor);
+    .standardBorder(@borderColor);
+    .roundedBorder;
+}
+
+.box-shadow (@x: 0; @y: 0; @blur: 1px; @color: #000) {
+    box-shadow: @arguments;
+    -moz-box-shadow: @arguments;
+    -webkit-box-shadow: @arguments;
 }

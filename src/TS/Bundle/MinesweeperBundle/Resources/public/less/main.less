@@ -17,24 +17,21 @@ header {
 }
 
 #profile {
-    background-color: @tertiaryColor;
+    .roundedBox;
+
     font-weight: bold;
     line-height: @lineHeight;
     padding-left: @mediumSpace + @smallSpace;
     margin-bottom: @smallSpace;
-
-    .roundedBorder;
 }
 
 #user-list, #game-list {
     list-style: none;
 
-    padding: @smallSpace;
-    background-color: @tertiaryColor;
     margin-bottom: @smallSpace;
     margin-left: 0;
 
-    .roundedBorder;
+    .roundedBox;
 
     li {
         display: block;
@@ -45,22 +42,20 @@ header {
 #user-list {
     height: 200px;
     overflow: scroll;
-}
 
-#user-list a {
-    float: right;
+    a {
+        float: right;
+    }
 }
 
 #chat {
-    padding: @smallSpace;
     margin-bottom: @smallSpace;
 
     height: 200px;
     overflow: scroll;
     text-align: left;
 
-    .standardBorder;
-    .roundedBorder;
+    .roundedBox(@backgroundColor, @tertiaryColor, @primaryColor);
 
     p {
         margin-bottom: 0;
