@@ -17,7 +17,7 @@
     {% endverbatim %}
 
     <div ng-controller="GameCtrl">
-        {% include 'TSMinesweeperBundle:Partial:chat.html.twig' %}
+        {% include 'TSMinesweeperBundle:Partial:chat.html.twig' with {'section': 'game'} only %}
     </div>
 {% endblock %}
 

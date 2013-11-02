@@ -58,7 +58,7 @@ class LobbyController extends BaseController
     }
 
         /**
-     * @Route("/chat")
+     * @Route("/chat", name="ts_minesweeper_send_chat_lobby", options={"expose"=true})
      * @Method("POST")
      */
     public function chatPostAction(Request $request)

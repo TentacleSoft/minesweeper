@@ -32,15 +32,24 @@ minesweeperControllers.controller('GameCtrl', ['$scope', '$http', '$routeParams'
             $turn.removeClass('player0').removeClass('player1');
             $turn.addClass('player' + activePlayer);
         });
+    }
+]);
 
+minesweeperControllers.controller('ChatCtrl', ['$scope', '$http', '$routeParams',
+    function ChatCtrl($scope, $http, $routeParams) {
         $scope.sendChat = function () {
             if (!this.message) {
                 return;
             }
 
+            var arguments = {};
+            if (typeof($routeParams.gameId) !== 'undefined') {
+                arguments.gameId = $routeParams.gameId;
+            }
+
             $http
                 .post(
-                Routing.generate('ts_minesweeper_game_send_chat', {gameId: $routeParams.gameId}),
+                Routing.generate('ts_minesweeper_send_chat_' + $scope.section, arguments),
                 {from: loggedUser.username, message: this.message}
             )
                 .success(function (data) {

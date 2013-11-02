@@ -16,7 +16,7 @@
             </ul>
         </div>
 
-        {% include 'TSMinesweeperBundle:Partial:chat.html.twig' %}
+        {% include 'TSMinesweeperBundle:Partial:chat.html.twig' with {'section': 'lobby'} only %}
     </div>
 {% endblock %}
 
