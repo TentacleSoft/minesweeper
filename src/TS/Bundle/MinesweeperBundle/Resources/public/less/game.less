@@ -43,16 +43,6 @@
     background-color: @backgroundColor;
     border-radius: @smallSpace;
     margin-bottom: @smallSpace;
-
-    &.player0 {
-        color: @backgroundColor;
-        background-color: @player1Color;
-    }
-
-    &.player1 {
-        color: @backgroundColor;
-        background-color: @player2Color;
-    }
 }
 
 #board-container {
@@ -64,72 +54,72 @@
 
     border-right: 1px solid @secondaryColor;
     border-bottom: 1px solid @secondaryColor;
-}
 
-.board-cell {
-    padding: 0;
-    line-height: @cellSize;
-    text-align: center;
+    .board-cell {
+        padding: 0;
+        line-height: @cellSize;
+        text-align: center;
 
-    width: @cellSize;
-    height: @cellSize;
+        width: @cellSize;
+        height: @cellSize;
 
-    border-left: 1px solid @secondaryColor;
-    border-top: 1px solid @secondaryColor;
+        border-left: 1px solid @secondaryColor;
+        border-top: 1px solid @secondaryColor;
 
-    background-color: @tertiaryColor;
+        background-color: @tertiaryColor;
 
-    font-weight: bold;
+        font-weight: bold;
 
-    &.enabled:hover {
-        background-color: #F0F0F0;
-    }
+        &.enabled:hover {
+            background-color: #F0F0F0;
+        }
 
-    &.enabled:active {
-        background-color: #F5F5F5;
-    }
+        &.enabled:active {
+            background-color: #F5F5F5;
+        }
 
-    &.mine[data-player="0"] {
-        background: @backgroundColor url('../images/green_flag_32.png');
-    }
+        &.mine[data-player="0"] {
+            background: @backgroundColor url('../images/green_flag_32.png');
+        }
 
-    &.mine[data-player="1"] {
-        background: @backgroundColor url('../images/red_flag_32.png');
-    }
+        &.mine[data-player="1"] {
+            background: @backgroundColor url('../images/red_flag_32.png');
+        }
 
-    &.open {
-        background-color: @backgroundColor;
-    }
+        &.open {
+            background-color: @backgroundColor;
+        }
 
-    &[data-number="1"] {
-        color: blue;
-    }
+        &[data-number="1"] {
+            color: blue;
+        }
 
-    &[data-number="2"] {
-        color: green;
-    }
+        &[data-number="2"] {
+            color: green;
+        }
 
-    &[data-number="3"] {
-        color: red;
-    }
+        &[data-number="3"] {
+            color: red;
+        }
 
-    &[data-number="4"] {
-        color: darkblue;
-    }
+        &[data-number="4"] {
+            color: darkblue;
+        }
 
-    &[data-number="5"] {
-        color: darkred;
-    }
+        &[data-number="5"] {
+            color: darkred;
+        }
 
-    &[data-number="6"] {
-        color: lightseagreen;
-    }
+        &[data-number="6"] {
+            color: lightseagreen;
+        }
 
-    &[data-number="7"] {
-        color: black;
-    }
+        &[data-number="7"] {
+            color: black;
+        }
 
-    &[data-number="8"] {
-        color: darkgrey;
+        &[data-number="8"] {
+            color: darkgrey;
+        }
     }
 }

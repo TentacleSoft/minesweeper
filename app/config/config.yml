@@ -29,7 +29,7 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ TSMinesweeperBundle, UdfAngularJSBundle ]
+    bundles:        [ TSMinesweeperBundle, TSAngularJSBundle ]
     java: /usr/bin/java
     filters:
         less:

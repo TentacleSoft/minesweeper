@@ -117,11 +117,51 @@ header {
     .roundedBorder;
 }
 
+.player0 {
+    color: @backgroundColor;
+    background-color: @player1Color;
+}
+
+.player1 {
+    color: @backgroundColor;
+    background-color: @player2Color;
+}
+
 .error {
     color: orangered;
     font-style: italic;
 }
 
-.section-game {
-    display: none;
+.view-animation.ng-enter, .view-animation.ng-leave {
+    -webkit-transition: 0.2s linear all;
+    -moz-transition: 0.2s linear all;
+    -o-transition: 0.2s linear all;
+    transition: 0.2s linear all;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.view-animation.ng-enter {
+    z-index: 100;
+    left: 300px;
+    opacity: 0;
+}
+
+.view-animation.ng-enter.ng-enter-active {
+    left: 0;
+    opacity: 1;
+}
+
+.view-animation.ng-leave {
+    z-index: 101;
+    left: 0;
+    opacity: 1;
+}
+
+.view-animation.ng-leave.ng-leave-active {
+    left: -300px;
+    opacity: 0;
 }

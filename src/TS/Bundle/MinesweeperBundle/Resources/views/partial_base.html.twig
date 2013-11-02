@@ -1,0 +1,20 @@
+{% spaceless %}
+<div class="span3">
+    <h1 id="title">
+        <a href="{{ path('ts_minesweeper_web_index') }}">
+            {% trans %}Minesweeper{% endtrans %}
+        </a>
+    </h1>
+    <div id="profile">
+        {{ user.name }}
+    </div>
+    {% block navcolumn %}{% endblock %}
+</div>
+<div id="board-container" class="span9">
+    {% block maincolumn %}{% endblock %}
+</div>
+{% endspaceless %}
+
+{% block javascripts %}
+    <script>var loggedUser = JSON.parse('{{ user|json_encode|raw }}');</script>
+{% endblock %}

@@ -8,12 +8,12 @@ var gameId = 1,
 $(document).ready(function () {
     return;
     setInterval(function () {
-        if (typeof globals != 'undefined') {
+        if (typeof loggedUser != 'undefined') {
             if (section == 'lobby') {
                 $.getJSON('/lobby/', function (data) {
                     updateLobbyInfo(data);
                 });
-                $.getJSON('/users/' + globals.user.id + '/games', function (data) {
+                $.getJSON('/users/' + loggedUser.id + '/games', function (data) {
                     updateGamesInfo(data);
                 });
             } else if (section == 'game') {
@@ -31,7 +31,7 @@ $(document).ready(function () {
     });
 
     $('.board-cell.enabled').click(function () {
-        if (game.activePlayer != globals.user.id) {
+        if (game.activePlayer != loggedUser.id) {
             return;
         }
 
@@ -109,9 +109,9 @@ function updateGameInfo(data) {
     scoreboard.find('div[data-player="1"] .username').text(data.players[1].username);
 
     var turn = $('#turn');
-    if (data.activePlayer == globals.user.id) {
+    if (data.activePlayer == loggedUser.id) {
         turn.text('Your turn');
-        if (data.players[0].id == globals.user.id) {
+        if (data.players[0].id == loggedUser.id) {
             turn.addClass('player0');
         } else {
             turn.addClass('player1');
@@ -159,9 +159,9 @@ function updateUsersInfo(usersData) {
     for (var userKey in usersData) {
         var user = usersData[userKey];
 
-        if (user.id != globals.user.id) {
+        if (user.id != loggedUser.id) {
             var userElement = $('<li>').text(user.username + ' (' + user.games.won.length + '-' + user.games.lost.length + ')'),
-                link = $('<a>').attr('href', '/games/' + '?players=' + globals.user.id + ',' + user.id).text('New game');
+                link = $('<a>').attr('href', '/games/' + '?players=' + loggedUser.id + ',' + user.id).text('New game');
             userList.append(link.click(onUserClick).add(userElement));
         }
     }

@@ -1,15 +1,3 @@
-ts_minesweeper_homepage:
-    resource: @TSMinesweeperBundle/Controller/WebController.php
-    type:     annotation
-
-ts_minesweeper_users:
-    resource: @TSMinesweeperBundle/Controller/UserController.php
-    type:     annotation
-
-ts_minesweeper_games:
-    resource: @TSMinesweeperBundle/Controller/GameController.php
-    type:     annotation
-
-ts_minesweeper_lobby:
-    resource: @TSMinesweeperBundle/Controller/LobbyController.php
+ts_minesweeper_controllers:
+    resource: @TSMinesweeperBundle/Controller
     type:     annotation

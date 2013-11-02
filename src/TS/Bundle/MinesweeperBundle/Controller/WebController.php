@@ -12,20 +12,18 @@ class WebController extends Controller
     /**
      * @Route("/")
      * @Method("GET")
-     * @Template()
+     * @Template("::base.html.twig")
      */
     public function indexAction()
     {
         $user = $this->getUser();
 
-        $globals = array(
-            'user' => array(
-                'id' => $user->getId(),
-                'name' => $user->getName(),
-                'username' => $user->getUsername(),
-            )
+        $userData = array(
+            'id' => $user->getId(),
+            'name' => $user->getName(),
+            'username' => $user->getUsername()
         );
 
-        return array('globals' => $globals);
+        return array('user' => $userData);
     }
 }

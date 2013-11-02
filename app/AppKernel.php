@@ -18,10 +18,11 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Bc\Bundle\BootstrapBundle\BcBootstrapBundle(),
-            new TS\Bundle\MinesweeperBundle\TSMinesweeperBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new TS\Bundle\MinesweeperBundle\TSMinesweeperBundle(),
             new TS\Bundle\UserBundle\TSUserBundle(),
-            new Udf\AngularJSBundle\UdfAngularJSBundle(),
+            new TS\AngularJSBundle\TSAngularJSBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

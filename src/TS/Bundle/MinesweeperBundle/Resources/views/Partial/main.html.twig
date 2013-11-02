@@ -1,0 +1,27 @@
+{% extends 'TSMinesweeperBundle::partial_base.html.twig' %}
+
+{% block navcolumn %}
+    <div>
+        <header>Online players</header>
+        <ul id="user-list"></ul>
+    </div>
+
+    {% include 'TSMinesweeperBundle:Partial:chat.html.twig' %}
+{% endblock %}
+
+{% block maincolumn %}
+    <div>
+        <header>Your games</header>
+        {% verbatim %}
+        <ul id="game-list">
+            <li ng-repeat="game in games">
+                <a href="{{ '#/games/' + game.id }}">
+                    <span class="game-player" ng-repeat="player in game.players">
+                        {{ player.name }}: {{ player.score }}
+                    </span>
+                </a>
+            </li>
+        </ul>
+        {% endverbatim %}
+    </div>
+{% endblock %}

@@ -82,7 +82,7 @@ class GameController extends Controller
     }
 
     /**
-     * @Route("/{gameId}/chat")
+     * @Route("/{gameId}/chat", name="ts_minesweeper_game_send_chat", options={"expose"=true})
      * @Method("POST")
      */
     public function sendChatAction($gameId)
