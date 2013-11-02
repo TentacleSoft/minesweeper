@@ -17,7 +17,11 @@ minesweeperControllers.controller('LobbyCtrl', ['$scope', '$http', '$location',
             $http.post(Routing.generate('ts_minesweeper_new_game', {players: [loggedUser.id, userId]})).success(function (data) {
                 $location.path('#/games/' + data.id);
             });
-        }
+        };
+
+        $scope.otherUsers = function (user) {
+            return user.id != loggedUser.id;
+        };
     }]
 );
 
@@ -26,6 +30,7 @@ minesweeperControllers.controller('GameCtrl', ['$scope', '$http', '$routeParams'
         $http.get('/games/' + $routeParams.gameId).success(function (data) {
             $scope.game = data;
             $scope.chat = data.chat;
+            $scope.loggedUser = loggedUser;
 
             var activePlayer = data.activePlayer == data.players[0].id ? 0 : 1;
             $scope.activePlayer = activePlayer;
@@ -33,11 +38,12 @@ minesweeperControllers.controller('GameCtrl', ['$scope', '$http', '$routeParams'
                 data.activePlayer == loggedUser.id
                     ? 'Your turn'
                     : data.players[activePlayer].name + '\'s turn';
-
-            var $turn = $('#turn');
-            $turn.removeClass('player0').removeClass('player1');
-            $turn.addClass('player' + activePlayer);
         });
+
+        $scope.isActivePlayer = function (playerPosition) {
+            return $scope.activePlayer == playerPosition
+                && loggedUser.id == $scope.game.players[playerPosition].id;
+        };
     }
 ]);
 

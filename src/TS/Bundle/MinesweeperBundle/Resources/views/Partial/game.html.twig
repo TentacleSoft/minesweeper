@@ -1,22 +1,25 @@
 {% extends 'TSMinesweeperBundle::partial_base.html.twig' %}
 
 {% block navcolumn %}
-    {% verbatim %}
-    <div id="scoreboard">
-        <div data-player="0">
-            <div class="score">{{ game.players[0].score }}</div>
-            <div class="username">{{ game.players[0].name }}</div>
-        </div>
-        <div data-player="1">
-            <div class="score">{{ game.players[1].score }}</div>
-            <div class="username">{{ game.players[1].name }}</div>
-        </div>
-    </div>
-
-    <div id="turn">{{ turnText }}</div>
-    {% endverbatim %}
-
     <div ng-controller="GameCtrl">
+        {% verbatim %}
+        <div id="scoreboard">
+            <div data-player="0">
+                <div class="score">{{ game.players[0].score }}</div>
+                <div class="username">{{ game.players[0].name }}</div>
+            </div>
+            <div data-player="1">
+                <div class="score">{{ game.players[1].score }}</div>
+                <div class="username">{{ game.players[1].name }}</div>
+            </div>
+        </div>
+
+        <div id="turn"
+             ng-class="{player0: isActivePlayer(0), player1: isActivePlayer(1)}">
+            {{ turnText }}
+        </div>
+        {% endverbatim %}
+
         {% include 'TSMinesweeperBundle:Partial:chat.html.twig' with {'section': 'game'} only %}
     </div>
 {% endblock %}

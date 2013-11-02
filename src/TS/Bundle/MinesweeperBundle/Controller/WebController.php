@@ -12,7 +12,7 @@ class WebController extends Controller
     /**
      * @Route("/")
      * @Method("GET")
-     * @Template("::base.html.twig")
+     * @Template()
      */
     public function indexAction()
     {

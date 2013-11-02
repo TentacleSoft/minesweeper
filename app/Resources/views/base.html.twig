@@ -15,8 +15,6 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script>var loggedUser = JSON.parse('{{ user|json_encode|raw }}');</script>
-
     {# FoS JS Routing #}
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
@@ -24,7 +22,10 @@
     <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
 
-    {% javascripts '@TSMinesweeperBundle/Resources/public/js/*' %}
+    {% javascripts  '@TSMinesweeperBundle/Resources/public/js/controllers.js'
+                    '@TSMinesweeperBundle/Resources/public/js/app.js'
+        output='js/minesweeper.js'
+    %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

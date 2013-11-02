@@ -1,0 +1,6 @@
+{% extends '::base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>var loggedUser = JSON.parse('{{ user|json_encode|raw }}');</script>
+{% endblock %}
