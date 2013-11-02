@@ -1,0 +1,91 @@
+@import 'variables';
+
+#chat {
+    position: relative;
+
+    margin-bottom: @smallSpace;
+
+    height: 300px;
+    overflow: scroll;
+    text-align: left;
+
+    .roundedBox(white, @tertiaryColor, @primaryColor);
+
+    padding: 0;
+
+    > div {
+        padding: @smallSpace;
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+
+    .username {
+        background-color: black;
+        color: @backgroundColor;
+        padding: 2px 3px;
+        margin-right: @smallSpace;
+        font-size: 0.7em;
+        font-weight: bold;
+
+        .roundedBorder;
+    }
+
+    .info {
+        background-color: royalblue;
+        color: @backgroundColor;
+        padding: 2px 3px;
+        margin-right: @smallSpace;
+        font-size: 0.7em;
+        font-weight: bold;
+
+        .roundedBorder;
+    }
+
+    .error {
+        background-color: orangered;
+        color: white;
+        padding: 2px 3px;
+        margin-right: @smallSpace;
+        font-size: 0.7em;
+        font-weight: bold;
+
+        .roundedBorder;
+    }
+
+    form {
+        position: absolute;
+        bottom: 0;
+        margin: 0;
+
+        &:after {
+            clear: both;
+        }
+
+        input[type="text"] {
+            width: 198px;
+            height: @lineHeight;
+            border: 0;
+            border-radius: 0;
+            border-top: 1px solid @tertiaryColor;
+            padding: 0 @smallSpace;
+            margin: 0;
+        }
+
+        input[type="submit"] {
+            width: 60px;
+            height: @lineHeight + 1;
+            overflow: visible;
+            position: relative;
+            float: right;
+            border: 0;
+            border-radius: 0;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            background-color: @tertiaryColor;
+            color: @primaryColor;
+        }
+    }
+}

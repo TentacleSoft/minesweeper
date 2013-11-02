@@ -2,8 +2,8 @@ var minesweeperControllers = angular.module('minesweeperControllers', []);
 
 minesweeperControllers.controller('MainCtrl', ['$scope', function MainCtrl($scope) {}]);
 
-minesweeperControllers.controller('LobbyCtrl', ['$scope', '$http',
-    function LobbyCtrl($scope, $http) {
+minesweeperControllers.controller('LobbyCtrl', ['$scope', '$http', '$location',
+    function LobbyCtrl($scope, $http, $location) {
         $http.get(Routing.generate('ts_minesweeper_lobby_info')).success(function (data) {
             $scope.users = data.users;
             $scope.chat = data.chat;
@@ -12,6 +12,12 @@ minesweeperControllers.controller('LobbyCtrl', ['$scope', '$http',
         $http.get(Routing.generate('ts_minesweeper_user_games', {userId: loggedUser.id})).success(function (data) {
             $scope.games = data;
         });
+
+        $scope.newGame = function (userId) {
+            $http.post(Routing.generate('ts_minesweeper_new_game', {players: [loggedUser.id, userId]})).success(function (data) {
+                $location.path('#/games/' + data.id);
+            });
+        }
     }]
 );
 

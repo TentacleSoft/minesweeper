@@ -1,23 +1,25 @@
 <div ng-controller="ChatCtrl" ng-init="section='{{ section }}'">
     {% verbatim %}
     <div id="chat">
-        <p ng-repeat="chatLine in chat">
-            <span ng-switch on="chatLine.from">
-                <span ng-switch-when="-1" class="info">INFO</span>
-                <span ng-switch-when="-2" class="error">ERROR</span>
-                <span ng-switch-default
-                      class="username">{{ chatLine.from }}</span>
-            </span>
+        <div>
+            <p ng-repeat="chatLine in chat">
+                <span ng-switch on="chatLine.from">
+                    <span ng-switch-when="-1" class="info">INFO</span>
+                    <span ng-switch-when="-2" class="error">ERROR</span>
+                    <span ng-switch-default
+                          class="username">{{ chatLine.from }}</span>
+                </span>
 
-            <span>
-                {{ chatLine.message }}
-            </span>
-        </p>
+                <span>
+                    {{ chatLine.message }}
+                </span>
+            </p>
+        </div>
+
+        <form ng-submit="sendChat()">
+            <input type="text" ng-model="message" autocomplete="off"/>
+            <input type="submit" value="Send"/>
+        </form>
     </div>
-    <form id="form-chat" ng-submit="sendChat()">
-        <input type="text" ng-model="message" autocomplete="off"/>
-        <input type="submit" id="send" class="btn btn-default"
-               value="Send"/>
-    </form>
     {% endverbatim %}
 </div>

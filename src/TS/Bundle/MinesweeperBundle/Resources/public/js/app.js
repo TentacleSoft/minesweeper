@@ -8,7 +8,7 @@ minesweeperApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: Routing.generate('ts_minesweeper_partials', {pageName: 'main'}),
+                templateUrl: Routing.generate('ts_minesweeper_partials', {pageName: 'lobby'}),
                 controller: 'LobbyCtrl'
             })
             .when('/games/:gameId', {

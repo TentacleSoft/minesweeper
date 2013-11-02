@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class GameController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="ts_minesweeper_new_game", options={"expose"=true})
      * @Method("POST")
      */
     public function newGameAction()
@@ -32,13 +32,12 @@ class GameController extends Controller
         $userRepository = $this->getDoctrine()->getRepository('TSMinesweeperBundle:User');
 
         $players = array();
-        $playerIdsArray = explode(',', $playerIds);
 
-        if (!in_array($this->getUser()->getId(), $playerIdsArray)) {
+        if (!in_array($this->getUser()->getId(), $playerIds)) {
             throw new BadRequestHttpException('Player is not in the new game');
         }
 
-        foreach ($playerIdsArray as $playerId) {
+        foreach ($playerIds as $playerId) {
             $players[] = $userRepository->findOneById($playerId);
         }
 
