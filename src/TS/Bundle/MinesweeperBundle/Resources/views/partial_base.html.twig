@@ -7,6 +7,7 @@
     </h1>
     <div id="profile">
         {{ user.name }}
+        <a href="/logout" class="logout">{% trans %}Logout{% endtrans %}</a>
     </div>
     {% block navcolumn %}{% endblock %}
 </div>
