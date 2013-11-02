@@ -21,7 +21,7 @@ use TS\Bundle\MinesweeperBundle\Entity\User;
 class LobbyController extends BaseController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="ts_minesweeper_lobby_info", options={"expose"=true})
      * @Method("GET")
      */
     public function lobbyInfoAction()

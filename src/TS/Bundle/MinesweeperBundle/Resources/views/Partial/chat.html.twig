@@ -1,22 +1,21 @@
 {% verbatim %}
-<div ng-controller="GameCtrl">
-    <div id="chat">
-        <p ng-repeat="chatLine in game.chat">
-                <span ng-switch on="chatLine.from">
-                    <span ng-switch-when="-1" class="chatBadge info">INFO</span>
-                    <span ng-switch-when="-2" class="chatBadge error">ERROR</span>
-                    <span ng-switch-default class="chatBadge username">{{ chatLine.from }}</span>
-                </span>
+<div id="chat">
+    <p ng-repeat="chatLine in chat">
+        <span ng-switch on="chatLine.from">
+            <span ng-switch-when="-1" class="chatBadge info">INFO</span>
+            <span ng-switch-when="-2" class="chatBadge error">ERROR</span>
+            <span ng-switch-default
+                  class="chatBadge username">{{ chatLine.from }}</span>
+        </span>
 
-                <span>
-                    {{ chatLine.message }}
-                </span>
-        </p>
-    </div>
-    <form id="form-chat" ng-submit="sendChat()">
-        <input type="text" ng-model="message" autocomplete="off"/>
-        <input type="submit" id="send" class="btn btn-default"
-               value="Send"/>
-    </form>
+        <span>
+            {{ chatLine.message }}
+        </span>
+    </p>
 </div>
+<form id="form-chat" ng-submit="sendChat()">
+    <input type="text" ng-model="message" autocomplete="off"/>
+    <input type="submit" id="send" class="btn btn-default"
+           value="Send"/>
+</form>
 {% endverbatim %}

@@ -27,18 +27,18 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/{id}")
+     * @Route("/{userId}")
      * @Method("GET")
      */
-    public function userAction($id)
+    public function userAction($userId)
     {
         $userManager = $this->get('ts_minesweeper.user_manager');
 
-        return new JsonResponse($userManager->getUserInfo($id));
+        return new JsonResponse($userManager->getUserInfo($userId));
     }
 
     /**
-     * @Route("/{userId}/games")
+     * @Route("/{userId}/games", name="ts_minesweeper_user_games", options={"expose"=true})
      * @Method("GET")
      */
     public function userGamesAction($userId)

@@ -1,12 +1,23 @@
 {% extends 'TSMinesweeperBundle::partial_base.html.twig' %}
 
 {% block navcolumn %}
-    <div>
-        <header>Online players</header>
-        <ul id="user-list"></ul>
-    </div>
+    <div ng-controller="LobbyCtrl">
+        <div>
+            <header>Players</header>
+            <ul id="user-list">
+                {% verbatim %}
+                <li ng-repeat="user in users">
+                    <a href="#/users/{{ user.id }}">{{ user.name }} ({{ user.games.won.length }} - {{ user.games.lost.length }})</a>
+                    <span class="actions">
+                        <button class="new-game">Play!</button>
+                    </span>
+                </li>
+                {% endverbatim %}
+            </ul>
+        </div>
 
-    {% include 'TSMinesweeperBundle:Partial:chat.html.twig' %}
+        {% include 'TSMinesweeperBundle:Partial:chat.html.twig' %}
+    </div>
 {% endblock %}
 
 {% block maincolumn %}

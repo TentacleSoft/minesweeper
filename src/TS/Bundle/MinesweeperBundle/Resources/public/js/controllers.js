@@ -1,8 +1,15 @@
 var minesweeperControllers = angular.module('minesweeperControllers', []);
 
-minesweeperControllers.controller('MainCtrl', ['$scope', '$http',
-    function MainCtrl($scope, $http) {
-        $http.get('/users/' + loggedUser.id + '/games').success(function (data) {
+minesweeperControllers.controller('MainCtrl', ['$scope', function MainCtrl($scope) {}]);
+
+minesweeperControllers.controller('LobbyCtrl', ['$scope', '$http',
+    function LobbyCtrl($scope, $http) {
+        $http.get(Routing.generate('ts_minesweeper_lobby_info')).success(function (data) {
+            $scope.users = data.users;
+            $scope.chat = data.chat;
+        });
+
+        $http.get(Routing.generate('ts_minesweeper_user_games', {userId: loggedUser.id})).success(function (data) {
             $scope.games = data;
         });
     }]
@@ -12,6 +19,7 @@ minesweeperControllers.controller('GameCtrl', ['$scope', '$http', '$routeParams'
     function GameCtrl($scope, $http, $routeParams) {
         $http.get('/games/' + $routeParams.gameId).success(function (data) {
             $scope.game = data;
+            $scope.chat = data.chat;
 
             var activePlayer = data.activePlayer == data.players[0].id ? 0 : 1;
             $scope.activePlayer = activePlayer;
@@ -36,15 +44,11 @@ minesweeperControllers.controller('GameCtrl', ['$scope', '$http', '$routeParams'
                 {from: loggedUser.username, message: this.message}
             )
                 .success(function (data) {
-                    $scope.game.chat = data.chat;
+                    $scope.chat = data.chat;
                 }
             );
 
             this.message = '';
         }
     }
-]);
-
-minesweeperControllers.controller('ChatCtrl', ['$scope', '$http',
-
 ]);

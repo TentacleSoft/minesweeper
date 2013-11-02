@@ -16,7 +16,9 @@
     <div id="turn">{{ turnText }}</div>
     {% endverbatim %}
 
-    {% include 'TSMinesweeperBundle:Partial:chat.html.twig' %}
+    <div ng-controller="GameCtrl">
+        {% include 'TSMinesweeperBundle:Partial:chat.html.twig' %}
+    </div>
 {% endblock %}
 
 {% block maincolumn %}

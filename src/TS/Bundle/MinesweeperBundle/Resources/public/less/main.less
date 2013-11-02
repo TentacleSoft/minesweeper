@@ -11,9 +11,20 @@ header {
     font-weight: bold;
 }
 
-#title a {
+a {
+    font-weight: bold;
     text-decoration: none;
     color: inherit;
+
+    &:hover {
+        color: @highlightColor;
+        text-decoration: none;
+    }
+}
+
+#title {
+    color: @highlightColor;
+    text-shadow: 0 1px 2px @primaryColor;
 }
 
 #profile {
@@ -43,8 +54,14 @@ header {
     height: 200px;
     overflow: scroll;
 
-    a {
-        float: right;
+    li {
+        margin-bottom: @mediumSpace;
+        position: relative;
+    }
+
+    .actions {
+        position: absolute;
+        right: 0;
     }
 }
 
@@ -84,8 +101,7 @@ header {
         .roundedBorder;
     }
 
-    .info:before {
-        content: 'INFO';
+    .info {
         background-color: royalblue;
         color: @backgroundColor;
         padding: 2px 3px;
@@ -96,8 +112,7 @@ header {
         .roundedBorder;
     }
 
-    .error:before {
-        content: 'ERROR';
+    .error {
         background-color: orangered;
         color: white;
         padding: 2px 3px;
@@ -117,51 +132,43 @@ header {
     .roundedBorder;
 }
 
-.player0 {
-    color: @backgroundColor;
-    background-color: @player1Color;
-}
-
-.player1 {
-    color: @backgroundColor;
-    background-color: @player2Color;
-}
-
 .error {
     color: orangered;
     font-style: italic;
 }
 
-.view-animation.ng-enter, .view-animation.ng-leave {
-    -webkit-transition: 0.2s linear all;
-    -moz-transition: 0.2s linear all;
-    -o-transition: 0.2s linear all;
-    transition: 0.2s linear all;
+.view-animation {
+    &.ng-enter, &.ng-leave {
+        -webkit-transition: 0.2s linear all;
+        -moz-transition: 0.2s linear all;
+        -o-transition: 0.2s linear all;
+        transition: 0.2s linear all;
 
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-}
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
 
-.view-animation.ng-enter {
-    z-index: 100;
-    left: 300px;
-    opacity: 0;
-}
+    &.ng-enter {
+        z-index: 100;
+        left: 300px;
+        opacity: 0;
 
-.view-animation.ng-enter.ng-enter-active {
-    left: 0;
-    opacity: 1;
-}
+        &.ng-enter-active {
+            left: 0;
+            opacity: 1;
+        }
+    }
 
-.view-animation.ng-leave {
-    z-index: 101;
-    left: 0;
-    opacity: 1;
-}
+    &.ng-leave {
+        z-index: 101;
+        left: 0;
+        opacity: 1;
 
-.view-animation.ng-leave.ng-leave-active {
-    left: -300px;
-    opacity: 0;
+        &.ng-leave-active {
+            left: -300px;
+            opacity: 0;
+        }
+    }
 }
