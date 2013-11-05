@@ -25,14 +25,12 @@
 {% endblock %}
 
 {% block maincolumn %}
+    {% verbatim %}
     <table id="board">
-        {% for i in 0..15 %}
-            <tr>
-                {% for j in 0..15 %}
-                    <td class="board-cell enabled" data-row="{{ i }}"
-                        data-col="{{ j }}"></td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
+        <tr ng-repeat="i in range(16)">
+            <td ng-repeat="j in range(16)" ng-click="openCell(i,j)"
+                class="board-cell enabled"></td>
+        </tr>
     </table>
+    {% endverbatim %}
 {% endblock %}

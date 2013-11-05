@@ -5,7 +5,9 @@
 {% block title %}{% trans %}Minesweeper{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    {% stylesheets '@TSMinesweeperBundle/Resources/public/css/*' %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
 
     {% stylesheets '@TSMinesweeperBundle/Resources/public/less/*' %}
         <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
@@ -20,7 +22,6 @@
     <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
     <script src="{{ asset('js/jquery.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
 
     {% javascripts  '@TSMinesweeperBundle/Resources/public/js/controllers.js'
                     '@TSMinesweeperBundle/Resources/public/js/app.js'

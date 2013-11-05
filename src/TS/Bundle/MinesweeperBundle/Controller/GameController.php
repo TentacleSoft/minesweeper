@@ -60,7 +60,7 @@ class GameController extends Controller
     }
 
     /**
-     * @Route("/{gameId}")
+     * @Route("/{gameId}", name="ts_minesweeper_open_cell", options={"expose"=true})
      * @Method("POST")
      */
     public function openCellAction($gameId)

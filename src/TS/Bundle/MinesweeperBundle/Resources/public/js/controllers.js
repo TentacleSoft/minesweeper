@@ -44,6 +44,20 @@ minesweeperControllers.controller('GameCtrl', ['$scope', '$http', '$routeParams'
             return $scope.activePlayer == playerPosition
                 && loggedUser.id == $scope.game.players[playerPosition].id;
         };
+
+        $scope.openCell = function (row, col) {
+            $http.post(
+                Routing
+                    .generate('ts_minesweeper_open_cell', {gameId: $scope.game.id, row: row, col: col}))
+                    .success(function (data) {
+                        $scope.game.board = data.game.board;
+                    }
+            );
+        };
+
+        $scope.range = function (size) {
+            return new Array(size);
+        };
     }
 ]);
 

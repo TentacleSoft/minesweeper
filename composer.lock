@@ -3,66 +3,8 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ca41ef3cfe65760251667cafdc5fc7d9",
+    "hash": "8c5763ca4ce189cf29a885bf3ff38d7a",
     "packages": [
-        {
-            "name": "braincrafted/bootstrap-bundle",
-            "version": "1.4.2",
-            "target-dir": "Bc/Bundle/BootstrapBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/braincrafted/bootstrap-bundle.git",
-                "reference": "9d25ca1dca74722091efef00b4184761adf82549"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/braincrafted/bootstrap-bundle/zipball/9d25ca1dca74722091efef00b4184761adf82549",
-                "reference": "9d25ca1dca74722091efef00b4184761adf82549",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "instaclick/php-code-sniffer": "dev-master",
-                "instaclick/symfony2-coding-standard": "dev-master",
-                "knplabs/knp-markdown-bundle": "dev-master",
-                "knplabs/knp-menu": "dev-master",
-                "knplabs/knp-menu-bundle": "dev-master",
-                "knplabs/knp-paginator-bundle": "dev-master",
-                "nikic/php-parser": "dev-master",
-                "phpmd/phpmd": "1.4.*"
-            },
-            "suggest": {
-                "knplabs/knp-menu": "Required to use KnpMenuBundle.",
-                "knplabs/knp-menu-bundle": "BraincraftedBootstrapBundle styles the menus provided by KnpMenuBundle.",
-                "knplabs/knp-paginator-bundle": "BraincraftedBootstrapBundle styles the pagination provided by KnpPaginatorBundle.",
-                "twitter/bootstrap": "Twitter Bootstrap provides the assets (images, CSS and JS)"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Bc\\Bundle\\BootstrapBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Florian Eckerstorfer",
-                    "email": "florian@eckerstorfer.co",
-                    "homepage": "http://florianeckerstorfer.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Twitter Bootstrap for Symfony2",
-            "keywords": [
-                "bootstrap"
-            ],
-            "time": "2013-04-12 23:57:05"
-        },
         {
             "name": "doctrine/annotations",
             "version": "v1.1.2",
@@ -1846,33 +1788,6 @@
                 "templating"
             ],
             "time": "2013-10-30 08:20:53"
-        },
-        {
-            "name": "twitter/bootstrap",
-            "version": "v2.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "b4c4072679943773a7582daa63f545ba818fa627"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/b4c4072679943773a7582daa63f545ba818fa627",
-                "reference": "b4c4072679943773a7582daa63f545ba818fa627",
-                "shasum": ""
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "description": "Sleek, intuitive, and powerful front-end framework for faster and easier web development.",
-            "homepage": "http://twbs.github.com/bootstrap/",
-            "keywords": [
-                "bootstrap",
-                "css"
-            ],
-            "time": "2013-07-27 06:36:38"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
