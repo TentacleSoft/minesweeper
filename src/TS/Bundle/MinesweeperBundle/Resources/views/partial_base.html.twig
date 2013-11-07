@@ -1,5 +1,5 @@
 {% spaceless %}
-<div class="span3">
+<div id="sidebar">
     <h1 id="title">
         <a href="{{ path('ts_minesweeper_web_index') }}">
             {% trans %}Minesweeper{% endtrans %}
@@ -11,7 +11,7 @@
     </div>
     {% block navcolumn %}{% endblock %}
 </div>
-<div id="board-container" class="span9">
+<div id="board-container">
     {% block maincolumn %}{% endblock %}
 </div>
 {% endspaceless %}
