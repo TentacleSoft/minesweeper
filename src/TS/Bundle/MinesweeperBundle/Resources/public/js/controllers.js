@@ -46,7 +46,6 @@ minesweeperControllers.controller('GameCtrl', ['$scope', '$http', '$routeParams'
         };
 
         $scope.openCell = function (row, col) {
-            alert('OPENING '+ row + ',' + col);
             $http.post(
                 Routing
                     .generate('ts_minesweeper_open_cell', {gameId: $scope.game.id, row: row, col: col}))
