@@ -1138,17 +1138,17 @@
         },
         {
             "name": "rogerclotet/angularjsbundle",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "target-dir": "TS/AngularJSBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rogerclotet/angularjsbundle.git",
-                "reference": "c6a8da3a3ab05e8e9f865078fe2b6909054f400d"
+                "reference": "08c85754d1b33581982927f9adab8a343866450e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rogerclotet/angularjsbundle/zipball/c6a8da3a3ab05e8e9f865078fe2b6909054f400d",
-                "reference": "c6a8da3a3ab05e8e9f865078fe2b6909054f400d",
+                "url": "https://api.github.com/repos/rogerclotet/angularjsbundle/zipball/08c85754d1b33581982927f9adab8a343866450e",
+                "reference": "08c85754d1b33581982927f9adab8a343866450e",
                 "shasum": ""
             },
             "require": {
@@ -1178,7 +1178,7 @@
                 "javascript",
                 "symfony"
             ],
-            "time": "2013-11-01 19:48:12"
+            "time": "2014-01-27 21:33:29"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -1435,21 +1435,20 @@
         },
         {
             "name": "symfony/icu",
-            "version": "v1.2.0",
+            "version": "v1.0.0",
             "target-dir": "Symfony/Component/Icu",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-                "reference": "7299cd3d8d6602103d1ebff5d0a9917b7bc6de72"
+                "reference": "cac3fdfb111adbe590155f491594636d45129783"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/7299cd3d8d6602103d1ebff5d0a9917b7bc6de72",
-                "reference": "7299cd3d8d6602103d1ebff5d0a9917b7bc6de72",
+                "url": "https://api.github.com/repos/symfony/Icu/zipball/cac3fdfb111adbe590155f491594636d45129783",
+                "reference": "cac3fdfb111adbe590155f491594636d45129783",
                 "shasum": ""
             },
             "require": {
-                "lib-icu": ">=4.4",
                 "php": ">=5.3.3",
                 "symfony/intl": "~2.3"
             },
@@ -1479,7 +1478,7 @@
                 "icu",
                 "intl"
             ],
-            "time": "2013-06-03 18:32:58"
+            "time": "2013-06-03 18:32:07"
         },
         {
             "name": "symfony/monolog-bundle",
