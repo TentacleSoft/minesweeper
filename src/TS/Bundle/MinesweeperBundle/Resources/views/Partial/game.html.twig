@@ -27,8 +27,8 @@
 {% block maincolumn %}
     {% verbatim %}
     <table id="board">
-        <tr ng-repeat="i in range(16)">
-            <td ng-repeat="j in range(16)" ng-click="openCell(i,j)" class="board-cell enabled"></td>
+        <tr ng-repeat="row in game.board track by $index">
+            <td ng-repeat="value in row track by $index" ng-click="openCell(i,j)" class="board-cell enabled">{{ value }}</td>
         </tr>
     </table>
     {% endverbatim %}

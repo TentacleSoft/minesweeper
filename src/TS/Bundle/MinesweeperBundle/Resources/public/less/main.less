@@ -127,42 +127,6 @@ h1 {
     font-style: italic;
 }
 
-.view-animation {
-    &.ng-enter, &.ng-leave {
-        -webkit-transition: 0.2s linear all;
-        -moz-transition: 0.2s linear all;
-        -o-transition: 0.2s linear all;
-        transition: 0.2s linear all;
-
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-    }
-
-    &.ng-enter {
-        z-index: 100;
-        left: 300px;
-        opacity: 0;
-
-        &.ng-enter-active {
-            left: 0;
-            opacity: 1;
-        }
-    }
-
-    &.ng-leave {
-        z-index: 101;
-        left: 0;
-        opacity: 1;
-
-        &.ng-leave-active {
-            left: -300px;
-            opacity: 0;
-        }
-    }
-}
-
 .form-signin {
     max-width: 330px;
     padding: 15px;
