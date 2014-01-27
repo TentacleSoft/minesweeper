@@ -28,7 +28,7 @@
     {% verbatim %}
     <table id="board">
         <tr ng-repeat="row in game.board track by $index">
-            <td ng-repeat="value in row track by $index" ng-click="openCell(i,j)" class="board-cell enabled">{{ value }}</td>
+            <td ng-repeat="value in row track by $index" ng-click="openCell($parent.$index,$index)" class="board-cell enabled">{{ value }}</td>
         </tr>
     </table>
     {% endverbatim %}
