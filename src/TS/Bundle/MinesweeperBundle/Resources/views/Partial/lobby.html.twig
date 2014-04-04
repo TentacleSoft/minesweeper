@@ -9,7 +9,7 @@
                 <li ng-repeat="user in users | filter:otherUsers">
                     <a href="#/users/{{ user.id }}">{{ user.name }} ({{ user.games.won.length }} - {{ user.games.lost.length }})</a>
                     <span class="actions">
-                        <button ng-click="newGame({{ user.id }})" class="new-game">Play!</button>
+                        <button ng-click="newGame(user.id);" class="new-game">Play!</button>
                     </span>
                 </li>
                 {% endverbatim %}

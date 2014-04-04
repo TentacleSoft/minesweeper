@@ -27,26 +27,16 @@ minesweeperControllers.controller('LobbyCtrl', ['$scope', '$http', '$location',
 
 minesweeperControllers.controller('GameCtrl', ['$scope', '$http', '$routeParams',
     function GameCtrl($scope, $http, $routeParams) {
-        $http.get('/games/' + $routeParams.gameId).success(function (data) {
-            $scope.game = data;
-            $scope.chat = data.chat;
-            $scope.loggedUser = loggedUser;
+        $scope.isActivePlayer = function () {
+            return $scope.loggedUser.id == $scope.activePlayer;
+        };
 
-            var activePlayer = data.activePlayer == data.players[0].id ? 0 : 1;
-            $scope.activePlayer = activePlayer;
-            $scope.turnText =
-                data.activePlayer == loggedUser.id
-                    ? 'Your turn'
-                    : data.players[activePlayer].name + '\'s turn';
-        });
-
-        $scope.isActivePlayer = function (playerPosition) {
-            return $scope.activePlayer == playerPosition
-                && loggedUser.id == $scope.game.players[playerPosition].id;
+        $scope.getPlayerPosition = function () {
+            return $scope.loggedUser.id == $scope.game.players[0] ? 0 : 1;
         };
 
         $scope.openCell = function (row, col) {
-            if ($scope.isActivePlayer(loggedUser)) {
+            if ($scope.isActivePlayer()) {
                 $http.post(Routing.generate('ts_minesweeper_open_cell', {gameId: $scope.game.id, row: row, col: col}))
                     .success(function (data) {
                         $scope.game.board = data.game.board;

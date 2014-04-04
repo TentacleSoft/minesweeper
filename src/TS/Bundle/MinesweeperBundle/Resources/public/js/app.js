@@ -13,7 +13,27 @@ minesweeperApp.config(['$routeProvider',
             })
             .when('/games/:gameId', {
                 templateUrl: Routing.generate('ts_minesweeper_partials', {pageName: 'game'}),
-                controller: 'GameCtrl'
+                controller: 'GameCtrl',
+                resolve: {
+                    minesweeperApp: function ($q, $scope, $http, $routeParams) {
+                        var defer = $q.defer();
+
+                        $http.get('/games/' + $routeParams.gameId).success(function (data) {
+                            $scope.game = data;
+                            $scope.chat = data.chat;
+                            $scope.loggedUser = loggedUser;
+
+                            var activePlayer = data.activePlayer;
+                            $scope.activePlayer = activePlayer;
+                            $scope.turnText =
+                                data.activePlayer == loggedUser.id
+                                    ? 'Your turn'
+                                    : data.players[activePlayer].name + '\'s turn';
+                        });
+
+                        return defer.promise;
+                    }
+                }
             })
             .otherwise({
                 redirectTo: '/'
